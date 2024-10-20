@@ -40,36 +40,52 @@ struct Order {
 
 class TitleCell: UITableViewCell {
     
-    let titleLabel = UILabel()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
-        setupUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        selectionStyle = .none
-        setupUI()
-    }
-    
-    private func setupUI() {
-        contentView.addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    let titleLabel: UILabel = {
+            let label = UILabel()
+            label.text = "Промокоды"
+            label.font = UIFont.boldSystemFont(ofSize: 25)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }()
         
-        NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
-        ])
-    }
-    
-    func configure(with title: String) {
-        titleLabel.text = title
-    }
-}
+        private let subtitleLabel: UILabel = {
+            let label = UILabel()
+            label.text = "На один товар можно применить только один промокод"
+            label.numberOfLines = 3
+            label.font = UIFont.systemFont(ofSize: 14)
+            label.textColor = .gray
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }()
+        
+        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+            super.init(style: style, reuseIdentifier: reuseIdentifier)
+            setupViews()
+            backgroundColor = .white
+            selectionStyle = .none
+        }
+        
+        required init?(coder: NSCoder) {
+            super.init(coder: coder)
+            setupViews()
+            backgroundColor = .white
+            selectionStyle = .none
+        }
+        
+        private func setupViews() {
+            contentView.addSubview(titleLabel)
+            contentView.addSubview(subtitleLabel)
+            
+            NSLayoutConstraint.activate([
+                titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+                titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                
+                subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+                subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+                subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            ])
+        }}
 
 class ApplyPromocodeCell: UITableViewCell {
     let applyButton = UIButton(type: .system)
@@ -91,8 +107,8 @@ class ApplyPromocodeCell: UITableViewCell {
             applyButton.translatesAutoresizingMaskIntoConstraints = false
             
             applyButton.setTitle("Применить промокод", for: .normal)
-            applyButton.backgroundColor = .systemOrange
-            applyButton.setTitleColor(.white, for: .normal)
+            applyButton.backgroundColor = .orange.withAlphaComponent(0.2)
+            applyButton.setTitleColor(.orange, for: .normal)
             applyButton.layer.cornerRadius = 10
             
             NSLayoutConstraint.activate([
@@ -100,138 +116,54 @@ class ApplyPromocodeCell: UITableViewCell {
                 applyButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
                 applyButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
                 applyButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-                applyButton.heightAnchor.constraint(equalToConstant: 44)
+                applyButton.heightAnchor.constraint(equalToConstant: 50)
             ])
         }
 }
 
 class PromoCell: UITableViewCell {
     
-    private let containerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    let titleLabel = UILabel()
+    let switchControl = UISwitch()
     
-    private let leftCircleView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let rightCircleView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let discountLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        label.textColor = .white
-        label.backgroundColor = .systemGreen
-        label.layer.cornerRadius = 5
-        label.clipsToBounds = true
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let infoLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .gray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let switchControl: UISwitch = {
-        let switchControl = UISwitch()
-        switchControl.translatesAutoresizingMaskIntoConstraints = false
-        return switchControl
-    }()
+    var switchValueChanged: ((Bool) -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        setupViews()
+        setupUI()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         selectionStyle = .none
-        setupViews()
+        setupUI()
     }
     
-    private func setupViews() {
-        contentView.addSubview(containerView)
-        contentView.addSubview(leftCircleView)
-        contentView.addSubview(rightCircleView)
+    private func setupUI() {
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(switchControl)
         
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(discountLabel)
-        containerView.addSubview(infoLabel)
-        containerView.addSubview(switchControl)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        switchControl.translatesAutoresizingMaskIntoConstraints = false
+        
+        switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
         
         NSLayoutConstraint.activate([
-            // Constraints for containerView
-            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            // Constraints for leftCircleView
-            leftCircleView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            leftCircleView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: -10),
-            leftCircleView.widthAnchor.constraint(equalToConstant: 20),
-            leftCircleView.heightAnchor.constraint(equalToConstant: 20),
-            
-            // Constraints for rightCircleView
-            rightCircleView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            rightCircleView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 10),
-            rightCircleView.widthAnchor.constraint(equalToConstant: 20),
-            rightCircleView.heightAnchor.constraint(equalToConstant: 20),
-            
-            // Constraints for titleLabel
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            
-            // Constraints for discountLabel
-            discountLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            discountLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 8),
-            discountLabel.widthAnchor.constraint(equalToConstant: 40),
-            discountLabel.heightAnchor.constraint(equalToConstant: 20),
-            
-            // Constraints for infoLabel
-            infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            infoLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            infoLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            
-            // Constraints for switchControl
-            switchControl.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            switchControl.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+            switchControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            switchControl.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
+    }
+    
+    @objc private func switchValueChanged(_ sender: UISwitch) {
+        switchValueChanged?(sender.isOn)
     }
     
     func configure(with promocode: Order.Promocode) {
         titleLabel.text = promocode.title
-        discountLabel.text = "-\(promocode.percent)%"
-        infoLabel.text = promocode.info
         switchControl.isOn = promocode.active
     }
 }
@@ -259,49 +191,99 @@ class HidePromoCell: UITableViewCell {
         hideButton.setTitle("Скрыть промокоды", for: .normal)
         hideButton.backgroundColor = .clear
         hideButton.setTitleColor(.systemRed, for: .normal)
+        hideButton.contentHorizontalAlignment = .left
+
+        hideButton.setContentHuggingPriority(.required, for: .horizontal)
+        hideButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         
         NSLayoutConstraint.activate([
             hideButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            hideButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             hideButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            hideButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            hideButton.heightAnchor.constraint(equalToConstant: 44)
+            hideButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ])
     }
 }
 
 class OrderCell: UITableViewCell {
     
+    let priceLabel = UILabel()
+    let discountLabel = UILabel()
+    let promoCodeLabel = UILabel()
+    let paymentMethodLabel = UILabel()
     let totalLabel = UILabel()
+    let applyButton = UIButton(type: .system)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        backgroundColor = UIColor.systemGray6
         setupUI()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         selectionStyle = .none
+        backgroundColor = UIColor.systemGray6
         setupUI()
     }
     
     private func setupUI() {
-        contentView.addSubview(totalLabel)
-        totalLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalLabel.textAlignment = .center
-        totalLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        [priceLabel, discountLabel, promoCodeLabel, paymentMethodLabel, totalLabel, applyButton].forEach {
+            contentView.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         
+        priceLabel.font = UIFont.systemFont(ofSize: 16)
+        priceLabel.textAlignment = .left
+        discountLabel.textAlignment = .left
+        discountLabel.font = UIFont.systemFont(ofSize: 16)
+        promoCodeLabel.textAlignment = .left
+        promoCodeLabel.font = UIFont.systemFont(ofSize: 16)
+        paymentMethodLabel.textAlignment = .left
+        paymentMethodLabel.font = UIFont.systemFont(ofSize: 16)
+        totalLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        totalLabel.textAlignment = .left
+
+        applyButton.setTitle("Оформить заказ", for: .normal)
+        applyButton.backgroundColor = .orange
+        applyButton.setTitleColor(.white, for: .normal)
+        applyButton.layer.cornerRadius = 10
+
         NSLayoutConstraint.activate([
+            priceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            priceLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            
+            discountLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            discountLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            discountLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 4),
+            
+            promoCodeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            promoCodeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            promoCodeLabel.topAnchor.constraint(equalTo: discountLabel.bottomAnchor, constant: 4),
+            
+            paymentMethodLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            paymentMethodLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            paymentMethodLabel.topAnchor.constraint(equalTo: promoCodeLabel.bottomAnchor, constant: 4),
+            
             totalLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             totalLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            totalLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            totalLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            totalLabel.topAnchor.constraint(equalTo: paymentMethodLabel.bottomAnchor, constant: 10),
+            
+            applyButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            applyButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            applyButton.topAnchor.constraint(equalTo: totalLabel.bottomAnchor, constant: 16),
+            applyButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            applyButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
-    func configure(with total: String) {
-        totalLabel.text = total
+    func configure(with price: String, quantity: Int, discount: String, promoCode: String, paymentMethod: String, total: String) {
+        priceLabel.text = "Цена за \(quantity) товара: \(price)"
+        discountLabel.text = "Скидки: \(discount)"
+        promoCodeLabel.text = "Промокоды: \(promoCode)"
+        paymentMethodLabel.text = "Способ оплаты: \(paymentMethod)"
+        totalLabel.text = "Итого: \(total)"
     }
 }
 
@@ -330,12 +312,13 @@ class OrderTitleView: UIView {
         addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
             titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8)
+            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4)
         ])
     }
 }
+
 class ViewModel {
     
 }
@@ -343,7 +326,7 @@ class ViewModel {
 class ViewController: UIViewController {
     
     private var order: Order?
-    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let tableView = UITableView(frame: .zero, style: .plain)
     private let titleView = OrderTitleView()
 
     override func viewDidLoad() {
@@ -362,7 +345,7 @@ class ViewController: UIViewController {
                titleView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                titleView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                titleView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-               titleView.heightAnchor.constraint(equalToConstant: 44)
+               titleView.heightAnchor.constraint(equalToConstant: 30)
            ])
        }
     
@@ -375,6 +358,7 @@ class ViewController: UIViewController {
         tableView.register(HidePromoCell.self, forCellReuseIdentifier: "HidePromoCell")
         tableView.register(OrderCell.self, forCellReuseIdentifier: "OrderCell")
         tableView.separatorStyle = .none
+        //tableView.backgroundColor = .white
         
         view.addSubview(tableView)
         
@@ -406,7 +390,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
-            cell.configure(with: "Промокоды")
             return cell
             
         case 1:
@@ -428,8 +411,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "OrderCell", for: indexPath) as! OrderCell
-            if let order = order {
-                cell.configure(with: "Итого: 0 ₽")
+            if order != nil {
+                cell.configure(with: "1000", quantity: 2, discount: "10", promoCode: "100", paymentMethod: "900", total: "900")
             }
             return cell
             
@@ -441,7 +424,21 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
             return 5
         }
-        
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+            switch section {
+            case 1, 2, 3, 4:
+                return 1
+            default:
+                return 0
+            }
+        }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+            let headerView = UIView()
+            return headerView
+        }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
