@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  Order
-//
-//  Created by Nikolay Ratushnyak on 20.10.2024.
-//
-
 import UIKit
 
 @main
