@@ -107,7 +107,7 @@ class ApplyPromocodeCell: UITableViewCell {
             applyButton.translatesAutoresizingMaskIntoConstraints = false
             
             applyButton.setTitle("Применить промокод", for: .normal)
-            applyButton.backgroundColor = .orange.withAlphaComponent(0.2)
+            applyButton.backgroundColor = .orange.withAlphaComponent(0.15)
             applyButton.setTitleColor(.orange, for: .normal)
             applyButton.layer.cornerRadius = 10
             
@@ -123,8 +123,15 @@ class ApplyPromocodeCell: UITableViewCell {
 
 class PromoCell: UITableViewCell {
     
+    private let backgroundContainer = UIView()
     let titleLabel = UILabel()
+    let discountLabel = UILabel()
+    let validityLabel = UILabel()
+    let descriptionLabel = UILabel()
     let switchControl = UISwitch()
+    let leftCircleView = UIView()
+    let rightCircleView = UIView()
+        
     
     var switchValueChanged: ((Bool) -> Void)?
     
@@ -141,20 +148,84 @@ class PromoCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(switchControl)
+        contentView.addSubview(backgroundContainer)
+        backgroundContainer.translatesAutoresizingMaskIntoConstraints = false
+        backgroundContainer.backgroundColor = UIColor.systemGray6
+        backgroundContainer.layer.cornerRadius = 10
         
+        titleLabel.numberOfLines = 2
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        switchControl.translatesAutoresizingMaskIntoConstraints = false
+
+        discountLabel.numberOfLines = 1
+        discountLabel.font = UIFont.systemFont(ofSize: 14)
+        discountLabel.textColor = .red
+        discountLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        validityLabel.numberOfLines = 1
+        validityLabel.font = UIFont.systemFont(ofSize: 14)
+        validityLabel.textColor = .gray
+        validityLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        descriptionLabel.numberOfLines = 2
+        descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+        descriptionLabel.textColor = .darkGray
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        backgroundContainer.addSubview(titleLabel)
+        backgroundContainer.addSubview(discountLabel)
+        backgroundContainer.addSubview(validityLabel)
+        backgroundContainer.addSubview(descriptionLabel)
+        backgroundContainer.addSubview(switchControl)
+        
+        leftCircleView.translatesAutoresizingMaskIntoConstraints = false
+        leftCircleView.backgroundColor = .white
+        leftCircleView.layer.cornerRadius = 10 // Радиус круга
+        backgroundContainer.addSubview(leftCircleView)
+        
+        rightCircleView.translatesAutoresizingMaskIntoConstraints = false
+        rightCircleView.backgroundColor = .white
+        rightCircleView.layer.cornerRadius = 10 // Радиус круга
+        backgroundContainer.addSubview(rightCircleView)
+                
+        switchControl.translatesAutoresizingMaskIntoConstraints = false
         switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
         
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            backgroundContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            backgroundContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            backgroundContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            backgroundContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             
-            switchControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            switchControl.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            titleLabel.leadingAnchor.constraint(equalTo: backgroundContainer.leadingAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: backgroundContainer.topAnchor, constant: 8),
+            
+            discountLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 8),
+            discountLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            discountLabel.trailingAnchor.constraint(lessThanOrEqualTo: switchControl.leadingAnchor, constant: -8),
+            
+            switchControl.trailingAnchor.constraint(equalTo: backgroundContainer.trailingAnchor, constant: -16),
+            switchControl.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            
+            validityLabel.leadingAnchor.constraint(equalTo: backgroundContainer.leadingAnchor, constant: 16),
+            validityLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            validityLabel.trailingAnchor.constraint(equalTo: backgroundContainer.trailingAnchor, constant: -16),
+            
+            descriptionLabel.leadingAnchor.constraint(equalTo: backgroundContainer.leadingAnchor, constant: 16),
+            descriptionLabel.topAnchor.constraint(equalTo: validityLabel.bottomAnchor, constant: 4),
+            descriptionLabel.trailingAnchor.constraint(equalTo: backgroundContainer.trailingAnchor, constant: -16),
+            descriptionLabel.bottomAnchor.constraint(equalTo: backgroundContainer.bottomAnchor, constant: -8),
+            
+            leftCircleView.widthAnchor.constraint(equalToConstant: 20), // Ширина круга
+            leftCircleView.heightAnchor.constraint(equalToConstant: 20), // Высота круга
+            leftCircleView.centerYAnchor.constraint(equalTo: backgroundContainer.centerYAnchor),
+            leftCircleView.leadingAnchor.constraint(equalTo: backgroundContainer.leadingAnchor, constant: -10),
+                        
+            rightCircleView.widthAnchor.constraint(equalToConstant: 20), // Ширина круга
+            rightCircleView.heightAnchor.constraint(equalToConstant: 20), // Высота круга
+            rightCircleView.centerYAnchor.constraint(equalTo: backgroundContainer.centerYAnchor),
+            rightCircleView.trailingAnchor.constraint(equalTo: backgroundContainer.trailingAnchor, constant: 10)
+                   
         ])
     }
     
@@ -164,6 +235,9 @@ class PromoCell: UITableViewCell {
     
     func configure(with promocode: Order.Promocode) {
         titleLabel.text = promocode.title
+        discountLabel.text = "-\(promocode.percent)%"
+        validityLabel.text = promocode.endDate != nil ? "По \(promocode.endDate!)" : "Без срока действия"
+        descriptionLabel.text = promocode.info ?? "Описание"
         switchControl.isOn = promocode.active
     }
 }
