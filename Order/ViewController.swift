@@ -124,6 +124,7 @@ class ApplyPromocodeCell: UITableViewCell {
 class PromoCell: UITableViewCell {
     
     private let backgroundContainer = UIView()
+    private let discountContainer = UIView()
     let titleLabel = UILabel()
     let discountLabel = UILabel()
     let validityLabel = UILabel()
@@ -132,7 +133,6 @@ class PromoCell: UITableViewCell {
     let leftCircleView = UIView()
     let rightCircleView = UIView()
         
-    
     var switchValueChanged: ((Bool) -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -157,12 +157,17 @@ class PromoCell: UITableViewCell {
         titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        // Настройка контейнера для скидки
+        discountContainer.backgroundColor = UIColor.systemGreen
+        discountContainer.layer.cornerRadius = 10
+        discountContainer.translatesAutoresizingMaskIntoConstraints = false
+        
         discountLabel.numberOfLines = 1
         discountLabel.font = UIFont.systemFont(ofSize: 14)
-        discountLabel.textColor = .red
+        discountLabel.textColor = .white
         discountLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        validityLabel.numberOfLines = 1
+        validityLabel.numberOfLines = 2
         validityLabel.font = UIFont.systemFont(ofSize: 14)
         validityLabel.textColor = .gray
         validityLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -173,19 +178,20 @@ class PromoCell: UITableViewCell {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         
         backgroundContainer.addSubview(titleLabel)
-        backgroundContainer.addSubview(discountLabel)
+        backgroundContainer.addSubview(discountContainer)
+        discountContainer.addSubview(discountLabel)
         backgroundContainer.addSubview(validityLabel)
         backgroundContainer.addSubview(descriptionLabel)
         backgroundContainer.addSubview(switchControl)
         
         leftCircleView.translatesAutoresizingMaskIntoConstraints = false
         leftCircleView.backgroundColor = .white
-        leftCircleView.layer.cornerRadius = 10 // Радиус круга
+        leftCircleView.layer.cornerRadius = 10
         backgroundContainer.addSubview(leftCircleView)
         
         rightCircleView.translatesAutoresizingMaskIntoConstraints = false
         rightCircleView.backgroundColor = .white
-        rightCircleView.layer.cornerRadius = 10 // Радиус круга
+        rightCircleView.layer.cornerRadius = 10
         backgroundContainer.addSubview(rightCircleView)
                 
         switchControl.translatesAutoresizingMaskIntoConstraints = false
@@ -200,9 +206,13 @@ class PromoCell: UITableViewCell {
             titleLabel.leadingAnchor.constraint(equalTo: backgroundContainer.leadingAnchor, constant: 16),
             titleLabel.topAnchor.constraint(equalTo: backgroundContainer.topAnchor, constant: 8),
             
-            discountLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 8),
-            discountLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            discountLabel.trailingAnchor.constraint(lessThanOrEqualTo: switchControl.leadingAnchor, constant: -8),
+            discountContainer.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 8),
+            discountContainer.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            discountContainer.heightAnchor.constraint(equalToConstant: 24),
+            discountContainer.widthAnchor.constraint(greaterThanOrEqualToConstant: 40),
+            
+            discountLabel.centerXAnchor.constraint(equalTo: discountContainer.centerXAnchor),
+            discountLabel.centerYAnchor.constraint(equalTo: discountContainer.centerYAnchor),
             
             switchControl.trailingAnchor.constraint(equalTo: backgroundContainer.trailingAnchor, constant: -16),
             switchControl.centerYAnchor.constraint(equalTo: self.centerYAnchor),
@@ -216,16 +226,15 @@ class PromoCell: UITableViewCell {
             descriptionLabel.trailingAnchor.constraint(equalTo: backgroundContainer.trailingAnchor, constant: -16),
             descriptionLabel.bottomAnchor.constraint(equalTo: backgroundContainer.bottomAnchor, constant: -8),
             
-            leftCircleView.widthAnchor.constraint(equalToConstant: 20), // Ширина круга
-            leftCircleView.heightAnchor.constraint(equalToConstant: 20), // Высота круга
+            leftCircleView.widthAnchor.constraint(equalToConstant: 20),
+            leftCircleView.heightAnchor.constraint(equalToConstant: 20),
             leftCircleView.centerYAnchor.constraint(equalTo: backgroundContainer.centerYAnchor),
             leftCircleView.leadingAnchor.constraint(equalTo: backgroundContainer.leadingAnchor, constant: -10),
                         
-            rightCircleView.widthAnchor.constraint(equalToConstant: 20), // Ширина круга
-            rightCircleView.heightAnchor.constraint(equalToConstant: 20), // Высота круга
+            rightCircleView.widthAnchor.constraint(equalToConstant: 20),
+            rightCircleView.heightAnchor.constraint(equalToConstant: 20),
             rightCircleView.centerYAnchor.constraint(equalTo: backgroundContainer.centerYAnchor),
             rightCircleView.trailingAnchor.constraint(equalTo: backgroundContainer.trailingAnchor, constant: 10)
-                   
         ])
     }
     
@@ -241,6 +250,7 @@ class PromoCell: UITableViewCell {
         switchControl.isOn = promocode.active
     }
 }
+
 
 class HidePromoCell: UITableViewCell {
     
