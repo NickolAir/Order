@@ -95,6 +95,10 @@ class ViewController: UIViewController {
         tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         
         tableView.reloadData()
+        
+        viewModel.navigateToPromoScreen = { [weak self] viewController in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     private func setupTitleView() {

@@ -1,6 +1,8 @@
 
 import UIKit
 class ViewModel {
+    var navigateToPromoScreen: ((UIViewController) -> Void)?
+    
     lazy var cellViewModels: [TableViewModel] = [
         .init(type: .info(TableViewModel.ViewModelType.TitleInfo(
             title: "Промокоды",
@@ -13,8 +15,9 @@ class ViewModel {
             titleColor: UIColor.init(red: 1, green: 70/255, blue: 17/255, alpha: 1),
             buttonColor: UIColor.init(red: 1, green: 70/255, blue: 17/255, alpha: 0.1),
             buttonType: .Apply,
-            action: {
-                return
+            action: { [weak self] in
+                let promoViewController = AddPromoViewController()
+                self?.navigateToPromoScreen?(promoViewController)
             }
         ))),
         
