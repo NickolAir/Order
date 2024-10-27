@@ -7,15 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		401808B62CCE3FEE00086FFE /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401808B52CCE3FEA00086FFE /* ButtonCell.swift */; };
 		40A2229E2CC4D0DA0027EDEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */; };
 		40A222A02CC4D0DA0027EDEC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */; };
 		40A222A22CC4D0DA0027EDEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A222A12CC4D0DA0027EDEC /* ViewController.swift */; };
 		40A222A52CC4D0DA0027EDEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40A222A32CC4D0DA0027EDEC /* Main.storyboard */; };
 		40A222A72CC4D0DB0027EDEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40A222A62CC4D0DB0027EDEC /* Assets.xcassets */; };
 		40A222AA2CC4D0DB0027EDEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40A222A82CC4D0DB0027EDEC /* LaunchScreen.storyboard */; };
+		40CC752E2CCA6C2F00BFF4FD /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC752D2CCA6C2C00BFF4FD /* TitleCell.swift */; };
+		40CC75302CCA715400BFF4FD /* ApplyPromocodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC752F2CCA715200BFF4FD /* ApplyPromocodeCell.swift */; };
+		40CC75322CCA717B00BFF4FD /* PromoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75312CCA717A00BFF4FD /* PromoCell.swift */; };
+		40CC75342CCA71CA00BFF4FD /* HidePromoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75332CCA71C900BFF4FD /* HidePromoCell.swift */; };
+		40CC75362CCA71F000BFF4FD /* OrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75352CCA71EE00BFF4FD /* OrderCell.swift */; };
+		40CC75382CCA722A00BFF4FD /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75372CCA722500BFF4FD /* ViewModel.swift */; };
+		40CC753A2CCA723100BFF4FD /* OrderTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75392CCA723100BFF4FD /* OrderTitleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		401808B52CCE3FEA00086FFE /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		40A2229A2CC4D0DA0027EDEC /* Order.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Order.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +33,13 @@
 		40A222A62CC4D0DB0027EDEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40A222A92CC4D0DB0027EDEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		40A222AB2CC4D0DB0027EDEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		40CC752D2CCA6C2C00BFF4FD /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
+		40CC752F2CCA715200BFF4FD /* ApplyPromocodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyPromocodeCell.swift; sourceTree = "<group>"; };
+		40CC75312CCA717A00BFF4FD /* PromoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCell.swift; sourceTree = "<group>"; };
+		40CC75332CCA71C900BFF4FD /* HidePromoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HidePromoCell.swift; sourceTree = "<group>"; };
+		40CC75352CCA71EE00BFF4FD /* OrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCell.swift; sourceTree = "<group>"; };
+		40CC75372CCA722500BFF4FD /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		40CC75392CCA723100BFF4FD /* OrderTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +72,14 @@
 		40A2229C2CC4D0DA0027EDEC /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				401808B52CCE3FEA00086FFE /* ButtonCell.swift */,
+				40CC75392CCA723100BFF4FD /* OrderTitleView.swift */,
+				40CC75372CCA722500BFF4FD /* ViewModel.swift */,
+				40CC75352CCA71EE00BFF4FD /* OrderCell.swift */,
+				40CC75332CCA71C900BFF4FD /* HidePromoCell.swift */,
+				40CC75312CCA717A00BFF4FD /* PromoCell.swift */,
+				40CC752F2CCA715200BFF4FD /* ApplyPromocodeCell.swift */,
+				40CC752D2CCA6C2C00BFF4FD /* TitleCell.swift */,
 				40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */,
 				40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */,
 				40A222A12CC4D0DA0027EDEC /* ViewController.swift */,
@@ -138,8 +162,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40CC75322CCA717B00BFF4FD /* PromoCell.swift in Sources */,
+				40CC75382CCA722A00BFF4FD /* ViewModel.swift in Sources */,
 				40A222A22CC4D0DA0027EDEC /* ViewController.swift in Sources */,
+				40CC75362CCA71F000BFF4FD /* OrderCell.swift in Sources */,
+				40CC75342CCA71CA00BFF4FD /* HidePromoCell.swift in Sources */,
+				40CC75302CCA715400BFF4FD /* ApplyPromocodeCell.swift in Sources */,
+				40CC753A2CCA723100BFF4FD /* OrderTitleView.swift in Sources */,
 				40A2229E2CC4D0DA0027EDEC /* AppDelegate.swift in Sources */,
+				401808B62CCE3FEE00086FFE /* ButtonCell.swift in Sources */,
+				40CC752E2CCA6C2F00BFF4FD /* TitleCell.swift in Sources */,
 				40A222A02CC4D0DA0027EDEC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

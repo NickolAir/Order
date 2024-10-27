@@ -2,17 +2,21 @@ import UIKit
 
 class TitleCell: UITableViewCell {
     
-    let titleLabel: UILabel = {
+    var viewModel: TableViewModel.ViewModelType.TitleInfo? {
+        didSet {
+            updateUI()
+        }
+    }
+    
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Промокоды"
         label.font = UIFont.boldSystemFont(ofSize: 25)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let subtitleLabel: UILabel = {
+    private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "На один товар можно применить только один промокод"
         label.numberOfLines = 3
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .gray
@@ -28,10 +32,7 @@ class TitleCell: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupViews()
-        backgroundColor = .white
-        selectionStyle = .none
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupViews() {
@@ -47,5 +48,16 @@ class TitleCell: UITableViewCell {
             subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
+    }
+    
+    private func updateUI() {
+        titleLabel.text = viewModel?.title
+        subtitleLabel.text = viewModel?.info
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
+        subtitleLabel.text = nil
     }
 }
