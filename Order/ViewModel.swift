@@ -8,11 +8,11 @@ class ViewModel {
         ))),
         
         .init(type: .button(TableViewModel.ViewModelType.Button(
-            image: UIImage(named: "ticket"),
+            image: UIImage(named: "Shape"),
             title: "Добавить промокод",
             titleColor: .orange,
             buttonColor: .orange.withAlphaComponent(0.15),
-            type: "ApplyPromo",
+            buttonType: .Apply,
             action: {
                 return
             }
@@ -41,7 +41,7 @@ class ViewModel {
             title: "Скрыть промокоды",
             titleColor: .red,
             buttonColor: .none,
-            type: "HidePromo",
+            buttonType: .Hide,
             action: {
                 return
             }

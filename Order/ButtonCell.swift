@@ -12,8 +12,12 @@ class ButtonCell: UITableViewCell {
     private lazy var button: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
+    
+    private var buttonConstraints: [NSLayoutConstraint] = []
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,49 +31,65 @@ class ButtonCell: UITableViewCell {
     
     private func setupUI() {
         contentView.addSubview(button)
-        
-        selectionStyle = .none
-        
-        // Default constraints for button
-        NSLayoutConstraint.activate([
-            button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
-        ])
     }
     
     private func updateUI(with viewModel: TableViewModel.ViewModelType.Button) {
-        // Configure button with properties from the view model
-        if let title = viewModel.title {
-            button.setTitle(title, for: .normal)
-        }
-        if let titleColor = viewModel.titleColor {
-            button.setTitleColor(titleColor, for: .normal)
-        }
-        if let buttonColor = viewModel.buttonColor {
-            button.backgroundColor = buttonColor.withAlphaComponent(0.15)
-        }
+        NSLayoutConstraint.deactivate(buttonConstraints)
+        buttonConstraints.removeAll()
+        
+        button.setTitle(viewModel.title, for: .normal)
+        button.setTitleColor(viewModel.titleColor ?? .systemRed, for: .normal)
+        button.backgroundColor = viewModel.buttonType == .Apply ? viewModel.buttonColor?.withAlphaComponent(0.15) : .clear
+        button.contentHorizontalAlignment = viewModel.buttonType == .Hide ? .left : .center
+        
         if let image = viewModel.image {
             button.setImage(image, for: .normal)
-            button.semanticContentAttribute = .forceRightToLeft // Adjust image position if needed
+            button.imageView?.contentMode = .scaleAspectFit
+            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         }
         
-        // Set button action
-        if let action = viewModel.action {
-            button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        switch viewModel.buttonType {
+        case .Apply :
+            buttonConstraints = [
+                button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+                button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+                button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+                button.heightAnchor.constraint(equalToConstant: 50)
+            ]
+            button.contentHorizontalAlignment = .center
+            
+        case .Hide :
+            buttonConstraints = [
+                button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+                button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            ]
+            button.contentHorizontalAlignment = .left
+            
+        default:
+            buttonConstraints = [
+                button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+                button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+                button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            ]
+            button.contentHorizontalAlignment = .center
         }
+        
+        NSLayoutConstraint.activate(buttonConstraints)
     }
     
     @objc private func buttonTapped() {
-        viewModel?.action?() // Call the action closure
+        viewModel?.action?()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         button.setTitle(nil, for: .normal)
-        button.backgroundColor = .clear
-        button.setTitleColor(.systemBlue, for: .normal) // Reset to default color
+        button.backgroundColor = nil
+        button.setTitleColor(nil, for: .normal)
         button.setImage(nil, for: .normal)
+        button.contentHorizontalAlignment = .center
     }
 }

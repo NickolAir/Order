@@ -45,8 +45,13 @@ struct TableViewModel {
             let title: String?
             let titleColor: UIColor?
             let buttonColor: UIColor?
-            let type: String
+            let buttonType: type
             let action: (() -> Void)? // Action closure
+            
+            enum type {
+                case Hide
+                case Apply
+            }
         }
         
         case info(TitleInfo)
@@ -73,8 +78,7 @@ class ViewController: UIViewController {
         tableView.register(OrderCell.self, forCellReuseIdentifier: String(describing: OrderCell.self))
         tableView.register(PromoCell.self, forCellReuseIdentifier: String(describing: PromoCell.self))
         tableView.register(TitleCell.self, forCellReuseIdentifier: String(describing: TitleCell.self))
-        tableView.register(ApplyPromocodeCell.self, forCellReuseIdentifier: String(describing: ApplyPromocodeCell.self))
-        tableView.register(HidePromoCell.self, forCellReuseIdentifier: String(describing: HidePromoCell.self))
+        tableView.register(ButtonCell.self, forCellReuseIdentifier: String(describing: ButtonCell.self))
         return tableView
     }()
 
