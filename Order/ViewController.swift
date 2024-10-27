@@ -85,11 +85,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupTitleView()
+        self.navigationItem.title = "Оформление заказа"
+        
+        view.backgroundColor = .white
         
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 10).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
@@ -99,18 +101,6 @@ class ViewController: UIViewController {
         viewModel.navigateToPromoScreen = { [weak self] viewController in
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
-    }
-    
-    private func setupTitleView() {
-       view.addSubview(titleView)
-       titleView.translatesAutoresizingMaskIntoConstraints = false
-       
-       NSLayoutConstraint.activate([
-           titleView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-           titleView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-           titleView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-           titleView.heightAnchor.constraint(equalToConstant: 30)
-       ])
     }
 }
 
