@@ -13,7 +13,11 @@ class ButtonCell: UITableViewCell {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
+        button.tintColor = UIColor.init(red: 1, green: 70/255, blue: 17/255, alpha: 1)
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(animateButtonTouchDown), for: .touchDown)
+        button.addTarget(self, action: #selector(animateButtonTouchUp), for: [.touchUpInside, .touchUpOutside, .touchCancel])
+        
         return button
     }()
     
@@ -43,7 +47,8 @@ class ButtonCell: UITableViewCell {
         button.contentHorizontalAlignment = viewModel.buttonType == .Hide ? .left : .center
         
         if let image = viewModel.image {
-            button.setImage(image, for: .normal)
+            let tintedImage = image.withRenderingMode(.alwaysTemplate)
+            button.setImage(tintedImage, for: .normal)
             button.imageView?.contentMode = .scaleAspectFit
             button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         }
@@ -82,6 +87,20 @@ class ButtonCell: UITableViewCell {
     
     @objc private func buttonTapped() {
         viewModel?.action?()
+    }
+    
+    @objc private func animateButtonTouchDown() {
+        UIView.animate(withDuration: 0.1) {
+            self.button.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            self.button.alpha = 0.8
+        }
+    }
+    
+    @objc private func animateButtonTouchUp() {
+        UIView.animate(withDuration: 0.1) {
+            self.button.transform = CGAffineTransform.identity
+            self.button.alpha = 1.0
+        }
     }
     
     override func prepareForReuse() {
