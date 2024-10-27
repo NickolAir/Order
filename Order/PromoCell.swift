@@ -62,6 +62,7 @@ class PromoCell: UITableViewCell {
     
     private lazy var switchControl: UISwitch = {
         let switchControl = UISwitch()
+        switchControl.onTintColor = UIColor.init(red: 1, green: 70/255, blue: 17/255, alpha: 1)
         switchControl.translatesAutoresizingMaskIntoConstraints = false
         switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
         return switchControl

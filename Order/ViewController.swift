@@ -51,13 +51,23 @@ struct TableViewModel {
             enum type {
                 case Hide
                 case Apply
+                case Common
             }
+        }
+        
+        struct PromoField {
+            let promocode: String?
+            let title: String?
+            let errorMessage: String?
+            let button: Button?
+            let action: (() -> Void)?
         }
         
         case info(TitleInfo)
         case promo(Promo)
         case result(Result)
         case button(Button)
+        case promoField(PromoField)
     }
 
     var type: ViewModelType
@@ -66,8 +76,6 @@ struct TableViewModel {
 class ViewController: UIViewController {
     
     let viewModel = ViewModel()
-    
-    private let titleView = OrderTitleView()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -141,6 +149,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             cell.viewModel = button
+            return cell
+        case .promoField(let promoField):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PromoFieldCell.self)) as? PromoFieldCell else {
+                return UITableViewCell()
+            }
+            
+            cell.viewModel = promoField
             return cell
         }
     }

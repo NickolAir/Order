@@ -10,6 +10,7 @@
 		401808B62CCE3FEE00086FFE /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401808B52CCE3FEA00086FFE /* ButtonCell.swift */; };
 		401808B82CCE6CFA00086FFE /* AddPromoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401808B72CCE6CE000086FFE /* AddPromoViewController.swift */; };
 		401808BA2CCE719300086FFE /* AddPromoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401808B92CCE718B00086FFE /* AddPromoViewModel.swift */; };
+		4093A2662CCE9DC500D9F81F /* PromoFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4093A2652CCE9DC100D9F81F /* PromoFieldCell.swift */; };
 		40A2229E2CC4D0DA0027EDEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */; };
 		40A222A02CC4D0DA0027EDEC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */; };
 		40A222A22CC4D0DA0027EDEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A222A12CC4D0DA0027EDEC /* ViewController.swift */; };
@@ -20,13 +21,13 @@
 		40CC75322CCA717B00BFF4FD /* PromoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75312CCA717A00BFF4FD /* PromoCell.swift */; };
 		40CC75362CCA71F000BFF4FD /* OrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75352CCA71EE00BFF4FD /* OrderCell.swift */; };
 		40CC75382CCA722A00BFF4FD /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75372CCA722500BFF4FD /* ViewModel.swift */; };
-		40CC753A2CCA723100BFF4FD /* OrderTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75392CCA723100BFF4FD /* OrderTitleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		401808B52CCE3FEA00086FFE /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		401808B72CCE6CE000086FFE /* AddPromoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromoViewController.swift; sourceTree = "<group>"; };
 		401808B92CCE718B00086FFE /* AddPromoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromoViewModel.swift; sourceTree = "<group>"; };
+		4093A2652CCE9DC100D9F81F /* PromoFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoFieldCell.swift; sourceTree = "<group>"; };
 		40A2229A2CC4D0DA0027EDEC /* Order.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Order.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,7 +40,6 @@
 		40CC75312CCA717A00BFF4FD /* PromoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCell.swift; sourceTree = "<group>"; };
 		40CC75352CCA71EE00BFF4FD /* OrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCell.swift; sourceTree = "<group>"; };
 		40CC75372CCA722500BFF4FD /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		40CC75392CCA723100BFF4FD /* OrderTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,10 +72,10 @@
 		40A2229C2CC4D0DA0027EDEC /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				4093A2652CCE9DC100D9F81F /* PromoFieldCell.swift */,
 				401808B92CCE718B00086FFE /* AddPromoViewModel.swift */,
 				401808B72CCE6CE000086FFE /* AddPromoViewController.swift */,
 				401808B52CCE3FEA00086FFE /* ButtonCell.swift */,
-				40CC75392CCA723100BFF4FD /* OrderTitleView.swift */,
 				40CC75372CCA722500BFF4FD /* ViewModel.swift */,
 				40CC75352CCA71EE00BFF4FD /* OrderCell.swift */,
 				40CC75312CCA717A00BFF4FD /* PromoCell.swift */,
@@ -167,11 +167,11 @@
 				40A222A22CC4D0DA0027EDEC /* ViewController.swift in Sources */,
 				401808BA2CCE719300086FFE /* AddPromoViewModel.swift in Sources */,
 				40CC75362CCA71F000BFF4FD /* OrderCell.swift in Sources */,
-				40CC753A2CCA723100BFF4FD /* OrderTitleView.swift in Sources */,
 				40A2229E2CC4D0DA0027EDEC /* AppDelegate.swift in Sources */,
 				401808B82CCE6CFA00086FFE /* AddPromoViewController.swift in Sources */,
 				401808B62CCE3FEE00086FFE /* ButtonCell.swift in Sources */,
 				40CC752E2CCA6C2F00BFF4FD /* TitleCell.swift in Sources */,
+				4093A2662CCE9DC500D9F81F /* PromoFieldCell.swift in Sources */,
 				40A222A02CC4D0DA0027EDEC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -43,8 +43,18 @@ class ButtonCell: UITableViewCell {
         
         button.setTitle(viewModel.title, for: .normal)
         button.setTitleColor(viewModel.titleColor ?? .systemRed, for: .normal)
-        button.backgroundColor = viewModel.buttonType == .Apply ? viewModel.buttonColor?.withAlphaComponent(0.15) : .clear
-        button.contentHorizontalAlignment = viewModel.buttonType == .Hide ? .left : .center
+        
+        switch viewModel.buttonType {
+        case .Apply:
+            button.backgroundColor = viewModel.buttonColor
+            button.contentHorizontalAlignment = .center
+        case .Hide:
+            button.backgroundColor = viewModel.buttonColor
+            button.contentHorizontalAlignment = .left
+        case .Common:
+            button.backgroundColor = viewModel.buttonColor
+            button.contentHorizontalAlignment = .center
+        }
         
         if let image = viewModel.image {
             let tintedImage = image.withRenderingMode(.alwaysTemplate)
@@ -72,12 +82,13 @@ class ButtonCell: UITableViewCell {
             ]
             button.contentHorizontalAlignment = .left
             
-        default:
+        case .Common:
             buttonConstraints = [
                 button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
                 button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
                 button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-                button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+                button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+                button.heightAnchor.constraint(equalToConstant: 50)
             ]
             button.contentHorizontalAlignment = .center
         }
