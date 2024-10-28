@@ -18,7 +18,7 @@ class PromoFieldCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
-        label.textColor = .gray.withAlphaComponent(0.1)
+        label.textColor = .gray.withAlphaComponent(0.8)
         return label
     }()
     
