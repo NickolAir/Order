@@ -84,6 +84,8 @@ class PromoFieldCell: UITableViewCell {
             titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: textField.trailingAnchor, constant: -8),
             
             crossButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor),
+            crossButton.heightAnchor.constraint(equalToConstant: 50),
+            crossButton.widthAnchor.constraint(equalToConstant: 50),
             
             textField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             textField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
