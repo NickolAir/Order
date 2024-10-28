@@ -6,7 +6,6 @@ class AddPromoViewModel {
             promocode: "",
             title: "Введите код",
             errorMessage: "К сожалению, данного промокода не существует",
-            button: nil,
             action: {
                 return
             }

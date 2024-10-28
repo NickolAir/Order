@@ -59,7 +59,6 @@ struct TableViewModel {
             let promocode: String?
             let title: String?
             let errorMessage: String?
-            let button: Button?
             let action: (() -> Void)?
         }
         
