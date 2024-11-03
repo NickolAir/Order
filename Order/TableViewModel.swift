@@ -67,6 +67,15 @@ struct TableViewModel {
             let title: String?
             let subtitle: String?
             let imageName: String?
+            let arrowHide: Bool
+        }
+        
+        struct CommentCell {
+            
+        }
+        
+        struct RatingCell {
+            
         }
         
         case info(TitleInfo)
@@ -75,6 +84,8 @@ struct TableViewModel {
         case button(Button)
         case promoField(PromoField)
         case productCell(ProductCell)
+        case ratingCell(RatingCell)
+        case commentCell(CommentCell)
     }
 
     var type: ViewModelType

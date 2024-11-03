@@ -88,6 +88,20 @@ extension ReviewListViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.viewModel = product
             return cell
+        case .ratingCell(let rating):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RatingCell.self)) as? RatingCell else {
+                return UITableViewCell()
+            }
+            
+            cell.viewModel = rating
+            return cell
+        case .commentCell(let comment):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CommentCell.self)) as? CommentCell else {
+                return UITableViewCell()
+            }
+            
+            cell.viewModel = comment
+            return cell
         }
     }
 }

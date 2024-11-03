@@ -10,7 +10,9 @@ class ReviewViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        //tableView.register(ProductCell.self, forCellReuseIdentifier: String(describing: ProductCell.self))
+        tableView.register(ProductCell.self, forCellReuseIdentifier: String(describing: ProductCell.self))
+        tableView.register(CommentCell.self, forCellReuseIdentifier: String(describing: CommentCell.self))
+        tableView.register(RatingCell.self, forCellReuseIdentifier: String(describing: RatingCell.self))
         return tableView
     }()
 
@@ -83,6 +85,20 @@ extension ReviewViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             cell.viewModel = product
+            return cell
+        case .ratingCell(let rating):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RatingCell.self)) as? RatingCell else {
+                return UITableViewCell()
+            }
+            
+            cell.viewModel = rating
+            return cell
+        case .commentCell(let comment):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CommentCell.self)) as? CommentCell else {
+                return UITableViewCell()
+            }
+            
+            cell.viewModel = comment
             return cell
         }
     }
