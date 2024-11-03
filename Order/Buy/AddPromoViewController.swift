@@ -1,44 +1,27 @@
 import UIKit
 
-class ReviewViewController: UIViewController {
-    
-    private let viewModel = ReviewViewModel()
+class AddPromoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    private let viewModel = AddPromoViewModel()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .none
-        tableView.delegate = self
-        tableView.dataSource = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
-        //tableView.register(ProductCell.self, forCellReuseIdentifier: String(describing: ProductCell.self))
+        tableView.backgroundColor = .none
+        tableView.register(PromoFieldCell.self, forCellReuseIdentifier: String(describing: PromoFieldCell.self))
+        tableView.register(ButtonCell.self, forCellReuseIdentifier: String(describing: ButtonCell.self))
+        tableView.dataSource = self
+        tableView.delegate = self
         return tableView
     }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.navigationItem.title = "Напишите отзыв"
-        
-        view.backgroundColor = .white
-        
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        
-        tableView.reloadData()
-    }
-}
-
-extension ReviewViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.cellViewModels.count
+        viewModel.cellModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let viewModel = self.viewModel.cellViewModels[indexPath.row]
+        let viewModel = self.viewModel.cellModels[indexPath.row]
+        
         
         switch viewModel.type {
         case .promo(let promo):
@@ -77,13 +60,25 @@ extension ReviewViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.viewModel = promoField
             return cell
-        case .productCell (let product):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ProductCell.self)) as? ProductCell else {
-                return UITableViewCell()
-            }
-            
-            cell.viewModel = product
-            return cell
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationItem.title = "Применить промокод"
+        self.navigationController?.navigationBar.tintColor = UIColor.init(red: 1, green: 70/255, blue: 17/255, alpha: 1)
+        self.navigationController?.navigationBar.backItem?.title = ""
+
+        view.backgroundColor = .white
+        
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        
+        tableView.reloadData()
     }
 }

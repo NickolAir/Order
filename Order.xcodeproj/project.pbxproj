@@ -3,44 +3,29 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		401808B62CCE3FEE00086FFE /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401808B52CCE3FEA00086FFE /* ButtonCell.swift */; };
-		401808B82CCE6CFA00086FFE /* AddPromoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401808B72CCE6CE000086FFE /* AddPromoViewController.swift */; };
-		401808BA2CCE719300086FFE /* AddPromoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401808B92CCE718B00086FFE /* AddPromoViewModel.swift */; };
-		4093A2662CCE9DC500D9F81F /* PromoFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4093A2652CCE9DC100D9F81F /* PromoFieldCell.swift */; };
-		40A2229E2CC4D0DA0027EDEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */; };
-		40A222A02CC4D0DA0027EDEC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */; };
-		40A222A22CC4D0DA0027EDEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A222A12CC4D0DA0027EDEC /* ViewController.swift */; };
+		400F63ED2CD77E570088425B /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400F63EC2CD77E4C0088425B /* TableViewModel.swift */; };
 		40A222A52CC4D0DA0027EDEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40A222A32CC4D0DA0027EDEC /* Main.storyboard */; };
 		40A222A72CC4D0DB0027EDEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40A222A62CC4D0DB0027EDEC /* Assets.xcassets */; };
 		40A222AA2CC4D0DB0027EDEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40A222A82CC4D0DB0027EDEC /* LaunchScreen.storyboard */; };
-		40CC752E2CCA6C2F00BFF4FD /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC752D2CCA6C2C00BFF4FD /* TitleCell.swift */; };
-		40CC75322CCA717B00BFF4FD /* PromoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75312CCA717A00BFF4FD /* PromoCell.swift */; };
-		40CC75362CCA71F000BFF4FD /* OrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75352CCA71EE00BFF4FD /* OrderCell.swift */; };
-		40CC75382CCA722A00BFF4FD /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC75372CCA722500BFF4FD /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		401808B52CCE3FEA00086FFE /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
-		401808B72CCE6CE000086FFE /* AddPromoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromoViewController.swift; sourceTree = "<group>"; };
-		401808B92CCE718B00086FFE /* AddPromoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromoViewModel.swift; sourceTree = "<group>"; };
-		4093A2652CCE9DC100D9F81F /* PromoFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoFieldCell.swift; sourceTree = "<group>"; };
+		400F63EC2CD77E4C0088425B /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
 		40A2229A2CC4D0DA0027EDEC /* Order.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Order.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		40A222A12CC4D0DA0027EDEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		40A222A42CC4D0DA0027EDEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		40A222A62CC4D0DB0027EDEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40A222A92CC4D0DB0027EDEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		40A222AB2CC4D0DB0027EDEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		40CC752D2CCA6C2C00BFF4FD /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
-		40CC75312CCA717A00BFF4FD /* PromoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCell.swift; sourceTree = "<group>"; };
-		40CC75352CCA71EE00BFF4FD /* OrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCell.swift; sourceTree = "<group>"; };
-		40CC75372CCA722500BFF4FD /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		400F63DE2CD75EB60088425B /* Buy */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Buy; sourceTree = "<group>"; };
+		400F63DF2CD75ED80088425B /* Review */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Review; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		40A222972CC4D0DA0027EDEC /* Frameworks */ = {
@@ -72,17 +57,9 @@
 		40A2229C2CC4D0DA0027EDEC /* Order */ = {
 			isa = PBXGroup;
 			children = (
-				4093A2652CCE9DC100D9F81F /* PromoFieldCell.swift */,
-				401808B92CCE718B00086FFE /* AddPromoViewModel.swift */,
-				401808B72CCE6CE000086FFE /* AddPromoViewController.swift */,
-				401808B52CCE3FEA00086FFE /* ButtonCell.swift */,
-				40CC75372CCA722500BFF4FD /* ViewModel.swift */,
-				40CC75352CCA71EE00BFF4FD /* OrderCell.swift */,
-				40CC75312CCA717A00BFF4FD /* PromoCell.swift */,
-				40CC752D2CCA6C2C00BFF4FD /* TitleCell.swift */,
-				40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */,
-				40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */,
-				40A222A12CC4D0DA0027EDEC /* ViewController.swift */,
+				400F63EC2CD77E4C0088425B /* TableViewModel.swift */,
+				400F63DF2CD75ED80088425B /* Review */,
+				400F63DE2CD75EB60088425B /* Buy */,
 				40A222A32CC4D0DA0027EDEC /* Main.storyboard */,
 				40A222A62CC4D0DB0027EDEC /* Assets.xcassets */,
 				40A222A82CC4D0DB0027EDEC /* LaunchScreen.storyboard */,
@@ -105,6 +82,10 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				400F63DE2CD75EB60088425B /* Buy */,
+				400F63DF2CD75ED80088425B /* Review */,
 			);
 			name = Order;
 			productName = Order;
@@ -162,17 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40CC75322CCA717B00BFF4FD /* PromoCell.swift in Sources */,
-				40CC75382CCA722A00BFF4FD /* ViewModel.swift in Sources */,
-				40A222A22CC4D0DA0027EDEC /* ViewController.swift in Sources */,
-				401808BA2CCE719300086FFE /* AddPromoViewModel.swift in Sources */,
-				40CC75362CCA71F000BFF4FD /* OrderCell.swift in Sources */,
-				40A2229E2CC4D0DA0027EDEC /* AppDelegate.swift in Sources */,
-				401808B82CCE6CFA00086FFE /* AddPromoViewController.swift in Sources */,
-				401808B62CCE3FEE00086FFE /* ButtonCell.swift in Sources */,
-				40CC752E2CCA6C2F00BFF4FD /* TitleCell.swift in Sources */,
-				4093A2662CCE9DC500D9F81F /* PromoFieldCell.swift in Sources */,
-				40A222A02CC4D0DA0027EDEC /* SceneDelegate.swift in Sources */,
+				400F63ED2CD77E570088425B /* TableViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

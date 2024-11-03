@@ -1,4 +1,3 @@
-
 import UIKit
 class ViewModel {
     var navigateToPromoScreen: ((UIViewController) -> Void)?
