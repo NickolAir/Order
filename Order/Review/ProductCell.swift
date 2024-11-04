@@ -8,6 +8,16 @@ class ProductCell: UITableViewCell {
         }
     }
     
+    private lazy var mainView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    private lazy var descriptionView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     private lazy var picture: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -17,16 +27,16 @@ class ProductCell: UITableViewCell {
     
     private lazy var title: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .semibold)
-        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.numberOfLines = 2
         label.textColor = .black
         return label
     }()
     
     private lazy var subtitle: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .semibold)
-        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.numberOfLines = 2
         label.textColor = .black
         return label
     }()
@@ -37,20 +47,6 @@ class ProductCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .black
         return imageView
-    }()
-    
-    private lazy var textStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [title, subtitle])
-        stackView.axis = .vertical
-        stackView.spacing = 4
-        return stackView
-    }()
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [picture, textStackView, chevronImage])
-        stackView.axis = .horizontal
-        stackView.spacing = 1
-        return stackView
     }()
     
     enum CellConstraints {
@@ -82,9 +78,9 @@ class ProductCell: UITableViewCell {
        var value: CGFloat {
            switch self {
            case .imageWidth:
-               return 100
+               return 80
            case .imageHeight:
-               return 100
+               return 80
            }
        }
     }
@@ -108,12 +104,28 @@ class ProductCell: UITableViewCell {
        var value: CGFloat {
            switch self {
            case .height:
-               return 14
+               return 45
            case .width:
-               return 8
+               return 25
            }
        }
    }
+    
+    enum DescriptionViewConstraints {
+        case topPadding
+        case bottomPadding
+        case leftPadding
+        var value: CGFloat {
+            switch self {
+            case .bottomPadding:
+                return -8
+            case .topPadding:
+                return 8
+            case .leftPadding:
+                return 12
+            }
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -127,30 +139,55 @@ class ProductCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        textStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(mainView)
+        mainView.translatesAutoresizingMaskIntoConstraints = false
+        
+        mainView.addSubview(picture)
         picture.translatesAutoresizingMaskIntoConstraints = false
+        
+        mainView.addSubview(descriptionView)
+        descriptionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        descriptionView.addSubview(chevronImage)
         chevronImage.translatesAutoresizingMaskIntoConstraints = false
         
+        descriptionView.addSubview(title)
+        title.translatesAutoresizingMaskIntoConstraints = false
+        
+        descriptionView.addSubview(subtitle)
+        subtitle.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: CellConstraints.leftPadding.value),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: CellConstraints.rightPadding.value),
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellConstraints.topPadding.value),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: CellConstraints.bottomPadding.value),
-            stackView.heightAnchor.constraint(equalToConstant: CellConstraints.height.value),
+            mainView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: CellConstraints.topPadding.value),
+            mainView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: CellConstraints.bottomPadding.value),
+            mainView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: CellConstraints.leftPadding.value),
+            mainView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: CellConstraints.rightPadding.value),
             
+            descriptionView.topAnchor.constraint(equalTo: mainView.topAnchor, constant: DescriptionViewConstraints.topPadding.value),
+            descriptionView.rightAnchor.constraint(equalTo: mainView.rightAnchor),
+            descriptionView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: DescriptionViewConstraints.bottomPadding.value),
+            descriptionView.leftAnchor.constraint(equalTo: picture.rightAnchor, constant: DescriptionViewConstraints.leftPadding.value),
+            
+            picture.leftAnchor.constraint(equalTo: mainView.leftAnchor),
             picture.widthAnchor.constraint(equalToConstant: ImageConstraints.imageWidth.value),
+            picture.topAnchor.constraint(equalTo: mainView.topAnchor),
+            picture.bottomAnchor.constraint(equalTo: mainView.bottomAnchor),
             picture.heightAnchor.constraint(equalToConstant: ImageConstraints.imageHeight.value),
             
-            chevronImage.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
-            chevronImage.rightAnchor.constraint(equalTo: textStackView.rightAnchor, constant: 40),
+            chevronImage.rightAnchor.constraint(equalTo: descriptionView.rightAnchor),
+            chevronImage.centerYAnchor.constraint(equalTo: descriptionView.centerYAnchor),
+            chevronImage.widthAnchor.constraint(equalToConstant: ChevronImageViewConstraints.width.value),
+            chevronImage.heightAnchor.constraint(equalToConstant: ChevronImageViewConstraints.height.value),
             
-            title.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 1),
-            title.bottomAnchor.constraint(equalTo: subtitle.bottomAnchor, constant: 10),
+            title.leftAnchor.constraint(equalTo: descriptionView.leftAnchor),
+            title.topAnchor.constraint(equalTo: descriptionView.topAnchor),
+            title.rightAnchor.constraint(equalTo: chevronImage.leftAnchor),
+            title.heightAnchor.constraint(equalToConstant: 20),
             
-            subtitle.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 1),
-            subtitle.topAnchor.constraint(equalToSystemSpacingBelow: title.topAnchor, multiplier: 10),
+            subtitle.leftAnchor.constraint(equalTo: descriptionView.leftAnchor),
+            subtitle.rightAnchor.constraint(equalTo: descriptionView.rightAnchor),
+            subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 5),
+            subtitle.heightAnchor.constraint(equalToConstant: 20),
         ])
     }
     
