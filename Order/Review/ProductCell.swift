@@ -94,7 +94,7 @@ class ProductCell: UITableViewCell {
            case .bottomPadding:
                return -8
            case .topPadding:
-               return 8
+               return 4
            case .height:
                return 20
            }
