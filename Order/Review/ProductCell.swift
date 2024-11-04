@@ -88,12 +88,15 @@ class ProductCell: UITableViewCell {
    enum TitleConstraints {
        case topPadding
        case bottomPadding
+       case height
        var value: CGFloat {
            switch self {
            case .bottomPadding:
                return -8
            case .topPadding:
                return 8
+           case .height:
+               return 20
            }
        }
    }
@@ -182,12 +185,12 @@ class ProductCell: UITableViewCell {
             title.leftAnchor.constraint(equalTo: descriptionView.leftAnchor),
             title.topAnchor.constraint(equalTo: descriptionView.topAnchor),
             title.rightAnchor.constraint(equalTo: chevronImage.leftAnchor),
-            title.heightAnchor.constraint(equalToConstant: 20),
+            title.heightAnchor.constraint(equalToConstant: TitleConstraints.height.value),
             
             subtitle.leftAnchor.constraint(equalTo: descriptionView.leftAnchor),
             subtitle.rightAnchor.constraint(equalTo: descriptionView.rightAnchor),
-            subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 5),
-            subtitle.heightAnchor.constraint(equalToConstant: 20),
+            subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: TitleConstraints.topPadding.value),
+            subtitle.heightAnchor.constraint(equalToConstant: TitleConstraints.height.value),
         ])
     }
     
