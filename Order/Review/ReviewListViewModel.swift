@@ -2,33 +2,18 @@ import UIKit
 class ReviewListViewModel {
     var navigateToReviewScreen: ((UIViewController) -> Void)?
     
-    lazy var cellViewModels: [TableViewModel] = [
-        .init(type: .productCell(TableViewModel.ViewModelType.ProductCell(
-            title: "Золотое плоское",
-            subtitle: "обручальное кольцо 4 мм",
-            imageName: "ring",
-            arrowHide: false
-        ))),
-        
-        .init(type: .productCell(TableViewModel.ViewModelType.ProductCell(
-            title: "Золотое плоское",
-            subtitle: "обручальное кольцо 4 мм",
-            imageName: "ring2",
-            arrowHide: false
-        ))),
+    var dataUpdated: (() -> Void)?
     
-        .init(type: .productCell(TableViewModel.ViewModelType.ProductCell(
-            title: "Золотое плоское",
-            subtitle: "обручальное кольцо 4 мм",
-            imageName: "ring3",
-            arrowHide: false
-        ))),
+    lazy var cellViewModels: [TableViewModel] = []
     
-        .init(type: .productCell(TableViewModel.ViewModelType.ProductCell(
-            title: "Золотое плоское",
-            subtitle: "обручальное кольцо 4 мм",
-            imageName: "ring4",
-            arrowHide: false
-        ))),
-    ]
+    func createTable(products: [Product]) {
+        cellViewModels.removeAll()
+        for product in products {
+            cellViewModels.append(.init(type: .productCell(TableViewModel.ViewModelType.ProductCell(
+            title: product.title,
+            subtitle: product.subtitle,
+            imageName: product.imageName,
+            arrowHide: product.arrowHide))))
+        }
+    }
 }

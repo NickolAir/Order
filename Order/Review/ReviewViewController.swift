@@ -3,6 +3,7 @@ import UIKit
 class ReviewViewController: UIViewController {
     
     private let viewModel = ReviewViewModel()
+    private var review: Review
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -20,6 +21,7 @@ class ReviewViewController: UIViewController {
         super.viewDidLoad()
         
         self.navigationItem.title = "Напишите отзыв"
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         view.backgroundColor = .white
         
@@ -29,8 +31,44 @@ class ReviewViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        tableView.reloadData()
+        viewModel.dataUpdated = tableView.reloadData
+        review.product.arrowHide = true
+        viewModel.createTable(review: review)
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+       guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+       let keyboardHeight = keyboardFrame.height
+       tableView.contentInset.bottom = keyboardHeight
+       tableView.verticalScrollIndicatorInsets.bottom = keyboardHeight
+   }
+           
+   @objc private func keyboardWillHide(notification: NSNotification) {
+       tableView.contentInset.bottom = 0
+       tableView.verticalScrollIndicatorInsets.bottom = 0
+   }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if let cell = textField.superview?.superview as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
+            tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        }
+    }
+        
+    init(review: Review) {
+        self.review = review
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init() {
+        self.review = testReview
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

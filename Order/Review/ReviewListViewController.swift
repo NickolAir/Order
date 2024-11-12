@@ -3,6 +3,7 @@ import UIKit
 class ReviewListViewController: UIViewController {
     
     private let viewModel = ReviewListViewModel()
+    private var productArray: [Product] = products
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -13,6 +14,14 @@ class ReviewListViewController: UIViewController {
         tableView.register(ProductCell.self, forCellReuseIdentifier: String(describing: ProductCell.self))
         return tableView
     }()
+    
+    private func showReviewController(product: Product) {
+        var review = Review(product: product)
+        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+            self?.navigationItem.backButtonTitle = ""
+            self?.navigationController?.pushViewController(ReviewViewController(review: review), animated: true)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +36,10 @@ class ReviewListViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        
         tableView.reloadData()
+        
+        viewModel.dataUpdated = tableView.reloadData
+        viewModel.createTable(products: productArray)
         
         viewModel.navigateToReviewScreen = { [weak self] viewController in
             self?.navigationController?.pushViewController(viewController, animated: true)
@@ -39,6 +50,11 @@ class ReviewListViewController: UIViewController {
 extension ReviewListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.cellViewModels.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        showReviewController(product: products[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

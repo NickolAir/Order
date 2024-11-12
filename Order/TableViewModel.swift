@@ -71,11 +71,14 @@ struct TableViewModel {
         }
         
         struct CommentCell {
-            
+            let advantages: String?
+            let disadvantages: String?
+            let comment: String?
+            let checkBoxTitle: String?
         }
         
         struct RatingCell {
-            
+            let ratingLabel: RatingValue?
         }
         
         case info(TitleInfo)
