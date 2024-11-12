@@ -81,6 +81,10 @@ struct TableViewModel {
             let ratingLabel: RatingValue?
         }
         
+        struct PhotoCell {
+            var imageNames: [String]
+        }
+        
         case info(TitleInfo)
         case promo(Promo)
         case result(Result)
@@ -89,6 +93,7 @@ struct TableViewModel {
         case productCell(ProductCell)
         case ratingCell(RatingCell)
         case commentCell(CommentCell)
+        case photoCell(PhotoCell)
     }
 
     var type: ViewModelType

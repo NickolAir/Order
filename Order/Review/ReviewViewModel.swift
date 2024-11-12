@@ -16,6 +16,10 @@ class ReviewViewModel {
             ratingLabel: review.rating
         ))))
         
+        cellViewModels.append(.init(type: .photoCell(TableViewModel.ViewModelType.PhotoCell(
+            imageNames: ["overview", "overview2", "overview3", "overview4", "overview5", "overview6", "overview7"]
+        ))))
+        
         cellViewModels.append(.init(type: .commentCell(TableViewModel.ViewModelType.CommentCell(
             advantages: review.advantages,
             disadvantages: review.disadvantages,

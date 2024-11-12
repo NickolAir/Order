@@ -51,7 +51,6 @@ class CommentCell: UITableViewCell {
         let stackView = UIStackView(arrangedSubviews: [checkBox, checkBoxLabel])
         stackView.axis = .horizontal
         stackView.spacing = 8
-        stackView.alignment = .center
         return stackView
     }()
     
@@ -65,6 +64,7 @@ class CommentCell: UITableViewCell {
         let label = UILabel()
         label.text = "Оставить отзыв анонимно"
         label.font = .systemFont(ofSize: 14)
+        label.textColor = .black
         return label
     }()
     
@@ -126,7 +126,12 @@ class CommentCell: UITableViewCell {
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            
+            prosTextField.heightAnchor.constraint(equalToConstant: 50),
+            consTextField.heightAnchor.constraint(equalToConstant: 50),
+            commentTextField.heightAnchor.constraint(equalToConstant: 50),
+            
         ])
         
         stackView.addArrangedSubview(prosTextField)

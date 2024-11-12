@@ -81,6 +81,13 @@ class AddPromoViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.viewModel = comment
             return cell
+        case .photoCell(let photo):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PhotoCollectionView.self)) as? PhotoCollectionView else {
+                return UITableViewCell()
+            }
+            
+            cell.viewModel = photo
+            return cell
         }
     }
     

@@ -19,6 +19,7 @@ class CheckBox: UIButton {
     }
     
     private func setupUI() {
+        self.tintColor = UIColor(red: 1, green: 70/255, blue: 17/255, alpha: 1)
         self.addTarget(self, action: #selector(toggleCheck), for: .touchUpInside)
         updateAppearance()
     }

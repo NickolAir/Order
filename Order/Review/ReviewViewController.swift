@@ -14,6 +14,7 @@ class ReviewViewController: UIViewController {
         tableView.register(ProductCell.self, forCellReuseIdentifier: String(describing: ProductCell.self))
         tableView.register(CommentCell.self, forCellReuseIdentifier: String(describing: CommentCell.self))
         tableView.register(RatingCell.self, forCellReuseIdentifier: String(describing: RatingCell.self))
+        tableView.register(PhotoCollectionView.self, forCellReuseIdentifier: String(describing: PhotoCollectionView.self))
         return tableView
     }()
 
@@ -137,6 +138,13 @@ extension ReviewViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             cell.viewModel = comment
+            return cell
+        case .photoCell(let photo):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PhotoCollectionView.self)) as? PhotoCollectionView else {
+                return UITableViewCell()
+            }
+            
+            cell.viewModel = photo
             return cell
         }
     }

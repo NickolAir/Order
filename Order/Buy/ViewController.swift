@@ -105,6 +105,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.viewModel = comment
             return cell
+        case .photoCell(let photo):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PhotoCollectionView.self)) as? PhotoCollectionView else {
+                return UITableViewCell()
+            }
+            
+            cell.viewModel = photo
+            return cell
         }
     }
 }
