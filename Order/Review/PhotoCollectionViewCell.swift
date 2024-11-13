@@ -1,152 +1,73 @@
 import UIKit
 
-class PhotoCollectionView: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    enum Constants {
-        static let padding: CGFloat = 10
-        static let number: CGFloat = 4
-    }
+class PhotoCollectionViewCell: UICollectionViewCell {
+    var deleteCell: ((PhotoCollectionViewCell) -> Void)?
     
-    var dataUpdated: (() -> Void)?
+    static let identifier = "PhotoCollectionViewCell"
     
-    func deleteCell(cell: PhotoCell) {
-        guard let indexPath = collectionView.indexPath(for: cell) else { return }
-        
-        let deletedImage = displayedImages.remove(at: indexPath.item)
-        allImages.removeAll(where: { value in
-            return value == deletedImage
-        })
-        allImages.append(deletedImage)
-        
-        collectionView.performBatchUpdates({
-            collectionView.deleteItems(at: [indexPath])
-        }, completion: { _ in
-            if self.displayedImages.count < self.allImages.count {
-                self.isAddIconShown = true
-            }
-            self.collectionView.reloadData()
-            self.dataUpdated?()
-            
-        })
-    }
-    
-    var viewModel: TableViewModel.ViewModelType.PhotoCell? {
-        didSet {
-            updateUI()
-        }
-    }
-    
-    private lazy var addNewCellImage: UIImage = {
-        let image = UIImage(named: "cloud") ?? UIImage()
-        return image
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
+        return imageView
     }()
     
-    private var allImages: [UIImage] = []
-    private var displayedImages: [UIImage] = []
-    private var isAddIconShown = true
-    
-    func requiredHeight() -> CGFloat {
-        let numberOfItemsPerRow: CGFloat = 4
-        let spacing: CGFloat = 8
-        let itemHeight = (UIScreen.main.bounds.width - (numberOfItemsPerRow + 1) * spacing) / numberOfItemsPerRow
-        let rows = ceil(CGFloat(displayedImages.count + 1) / numberOfItemsPerRow) // +1 для кнопки добавления
-        let result = rows * itemHeight + (rows + 1) * spacing
-        return result
-    }
-    
-    private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
-        layout.scrollDirection = .vertical
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.isScrollEnabled = false
-        return collectionView
+    private let deleteButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("✕", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .none
+        button.addTarget(self, action: #selector(deleteButtonAction), for: .touchUpInside)
+        button.layer.cornerRadius = 10
+        return button
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
+    @objc private func deleteButtonAction() {
+        deleteCell?(self)
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.addSubview(imageView)
+
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        ])
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with images: [UIImage]) {
-        self.allImages = images
-        displayedImages = []
-        collectionView.reloadData()
-    }
-    
-    func setupUI() {
-        contentView.addSubview(collectionView)
-        
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            collectionView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
-            collectionView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
-            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
-        ])
-    }
-    
-    func updateUI() {
-        guard let viewModel else { return }
-        for imageName in viewModel.imageNames {
-            if let image = UIImage(named: imageName) {
-                self.allImages.append(image)
+    func configure(with image: UIImage, isDeleteable: Bool = false, deleteClousure: ((PhotoCollectionViewCell) -> Void)? = nil) {
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFill
+        if isDeleteable {
+            imageView.backgroundColor = .none
+            contentView.addSubview(deleteButton)
+            deleteButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+                deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+                deleteButton.widthAnchor.constraint(equalToConstant: 20),
+                deleteButton.heightAnchor.constraint(equalToConstant: 20),
+            ])
+            
+            if let deleteClousure = deleteClousure {
+                self.deleteCell = deleteClousure
             }
         }
-        
-        collectionView.reloadData()
-    }
-}
-
-extension PhotoCollectionView {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return displayedImages.count + (isAddIconShown ? 1 : 0)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.identifier, for: indexPath) as! PhotoCell
-        if indexPath.item < allImages.count {
-            if indexPath.item < displayedImages.count {
-                cell.configure(with: displayedImages[indexPath.item], isDeleteable: true, deleteClousure: deleteCell(cell:))
-            } else {
-                cell.configure(with: addNewCellImage, isDeleteable: false)
-            }
-            return cell
-        } else {
-            cell.configure(with: addNewCellImage, isDeleteable: false)
-        }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.item == displayedImages.count && isAddIconShown {
-            addNextImage()
+        else {
+            deleteButton.removeFromSuperview()
+            imageView.contentMode = .center
+            imageView.backgroundColor = UIColor.lightGray
         }
     }
-    
-    func addNextImage() {
-        guard displayedImages.count < allImages.count else { return }
-        displayedImages.append(allImages[displayedImages.count])
-        if displayedImages.count == allImages.count {
-            isAddIconShown = false
-        }
-
-        collectionView.reloadData()
-        dataUpdated?()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let totalPadding = Constants.padding * (Constants.number + 1)
-        let itemWidth = (collectionView.bounds.width - totalPadding) / Constants.number
-        return CGSize(width: itemWidth, height: itemWidth)
-    }
-    
 }

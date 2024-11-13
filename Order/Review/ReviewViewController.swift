@@ -139,13 +139,36 @@ extension ReviewViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.viewModel = comment
             return cell
-        case .photoCell(let photo):
+        case .photoCell(let photoCollection):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PhotoCollectionView.self)) as? PhotoCollectionView else {
                 return UITableViewCell()
             }
             
-            cell.viewModel = photo
+            cell.viewModel = photoCollection
+            cell.dataUpdated = { [weak self] in
+                self?.tableView.beginUpdates()
+                self?.tableView.endUpdates()
+            }
+            cell.selectionStyle = .none
             return cell
         }
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+       let viewModel = self.viewModel.cellViewModels[indexPath.row]
+       
+       switch viewModel.type {
+       case .photoCell(let photoCollection):
+           guard let cell = tableView.cellForRow(at: indexPath) as? PhotoCollectionView else {
+               let cell = PhotoCollectionView(style: .default, reuseIdentifier: String(describing: PhotoCollectionView.self))
+               cell.viewModel = photoCollection
+               return cell.requiredHeight()
+           }
+           
+           return cell.requiredHeight()
+           
+       default:
+           return UITableView.automaticDimension
+       }
+   }
 }
