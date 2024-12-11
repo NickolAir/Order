@@ -9,6 +9,8 @@ struct OrderTotalView: View {
     let optionalButtonTitle: String?
     let optionalButtonAction: (() -> Void)?
     
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 10) {
@@ -41,8 +43,13 @@ struct OrderTotalView: View {
                 }
             }
             .padding()
+            .navigationBarItems(leading: Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "xmark")
+                    .tint(.black)
+            })
         }
-        .navigationBarBackButtonHidden(false)
     }
 }
 
