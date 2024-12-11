@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		400F63ED2CD77E570088425B /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400F63EC2CD77E4C0088425B /* TableViewModel.swift */; };
+		4011AF4C2D0830C20000E947 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4011AF4B2D0830B70000E947 /* MainScreenView.swift */; };
 		40A2229E2CC4D0DA0027EDEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */; };
 		40A222A02CC4D0DA0027EDEC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */; };
 		40A222A52CC4D0DA0027EDEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40A222A32CC4D0DA0027EDEC /* Main.storyboard */; };
@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		400F63EC2CD77E4C0088425B /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
+		4011AF4B2D0830B70000E947 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
 		40A2229A2CC4D0DA0027EDEC /* Order.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Order.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -29,7 +29,9 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		400F63DE2CD75EB60088425B /* Buy */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Buy; sourceTree = "<group>"; };
 		400F63DF2CD75ED80088425B /* Review */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Review; sourceTree = "<group>"; };
+		4011AF4D2D0833190000E947 /* CancelOrder */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CancelOrder; sourceTree = "<group>"; };
 		40CEACE92CE3655A00A990FD /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
+		40F5536B2D0967D9009AB85D /* TotalScreen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TotalScreen; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,10 +64,12 @@
 		40A2229C2CC4D0DA0027EDEC /* Order */ = {
 			isa = PBXGroup;
 			children = (
-				40CEACE92CE3655A00A990FD /* Models */,
+				40F5536B2D0967D9009AB85D /* TotalScreen */,
+				4011AF4B2D0830B70000E947 /* MainScreenView.swift */,
 				40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */,
 				40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */,
-				400F63EC2CD77E4C0088425B /* TableViewModel.swift */,
+				40CEACE92CE3655A00A990FD /* Models */,
+				4011AF4D2D0833190000E947 /* CancelOrder */,
 				400F63DF2CD75ED80088425B /* Review */,
 				400F63DE2CD75EB60088425B /* Buy */,
 				40A222A32CC4D0DA0027EDEC /* Main.storyboard */,
@@ -94,7 +98,9 @@
 			fileSystemSynchronizedGroups = (
 				400F63DE2CD75EB60088425B /* Buy */,
 				400F63DF2CD75ED80088425B /* Review */,
+				4011AF4D2D0833190000E947 /* CancelOrder */,
 				40CEACE92CE3655A00A990FD /* Models */,
+				40F5536B2D0967D9009AB85D /* TotalScreen */,
 			);
 			name = Order;
 			productName = Order;
@@ -153,8 +159,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				40A2229E2CC4D0DA0027EDEC /* AppDelegate.swift in Sources */,
-				400F63ED2CD77E570088425B /* TableViewModel.swift in Sources */,
 				40A222A02CC4D0DA0027EDEC /* SceneDelegate.swift in Sources */,
+				4011AF4C2D0830C20000E947 /* MainScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
