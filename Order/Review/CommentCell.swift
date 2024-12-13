@@ -50,7 +50,8 @@ class CommentCell: UITableViewCell {
     private lazy var checkBoxStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [checkBox, checkBoxLabel])
         stackView.axis = .horizontal
-        stackView.spacing = 8
+        stackView.spacing = 3
+        stackView.alignment = .leading
         return stackView
     }()
     
@@ -121,6 +122,12 @@ class CommentCell: UITableViewCell {
     private func setupUI() {
         contentView.addSubview(stackView)
         
+        stackView.addArrangedSubview(prosTextField)
+        stackView.addArrangedSubview(consTextField)
+        stackView.addArrangedSubview(commentTextField)
+        stackView.addArrangedSubview(checkBoxStackView)
+        stackView.addArrangedSubview(button)
+        stackView.addArrangedSubview(underButtonLabel)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -131,15 +138,9 @@ class CommentCell: UITableViewCell {
             prosTextField.heightAnchor.constraint(equalToConstant: 50),
             consTextField.heightAnchor.constraint(equalToConstant: 50),
             commentTextField.heightAnchor.constraint(equalToConstant: 50),
+            checkBox.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10)
             
         ])
-        
-        stackView.addArrangedSubview(prosTextField)
-        stackView.addArrangedSubview(consTextField)
-        stackView.addArrangedSubview(commentTextField)
-        stackView.addArrangedSubview(checkBoxStackView)
-        stackView.addArrangedSubview(button)
-        stackView.addArrangedSubview(underButtonLabel)
     }
     
     private func updateUI() {

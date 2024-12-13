@@ -65,11 +65,11 @@
 		40A2229C2CC4D0DA0027EDEC /* Order */ = {
 			isa = PBXGroup;
 			children = (
-				4059D2ED2D0B51C7006780A4 /* Promocode */,
-				40F5536B2D0967D9009AB85D /* TotalScreen */,
 				4011AF4B2D0830B70000E947 /* MainScreenView.swift */,
 				40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */,
 				40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */,
+				4059D2ED2D0B51C7006780A4 /* Promocode */,
+				40F5536B2D0967D9009AB85D /* TotalScreen */,
 				40CEACE92CE3655A00A990FD /* Models */,
 				4011AF4D2D0833190000E947 /* CancelOrder */,
 				400F63DF2CD75ED80088425B /* Review */,
