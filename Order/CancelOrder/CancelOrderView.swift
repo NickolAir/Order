@@ -10,18 +10,26 @@ struct CustomButton: View {
     var title: String
     var backgroundColor: Color
     var textColor: Color
-    var action: () -> ()
-    
+    var action: (() -> ())?
+
     var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.headline)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(backgroundColor)
-                .foregroundColor(textColor)
-                .cornerRadius(12)
+        if let action = action {
+            Button(action: action) {
+                buttonContent
+            }
+        } else {
+            buttonContent
         }
+    }
+
+    private var buttonContent: some View {
+        Text(title)
+            .font(.headline)
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(backgroundColor)
+            .foregroundColor(textColor)
+            .cornerRadius(12)
     }
 }
 
@@ -101,8 +109,6 @@ struct CancelOrderView: View {
                 }
                 .padding()
                 .offset(x: 0, y: -90)
-                .navigationTitle("Укажите причину отмены")
-                .navigationBarTitleDisplayMode(.inline)
                 
                 if isLoading {
                     Color.black.opacity(0.4)
@@ -116,6 +122,9 @@ struct CancelOrderView: View {
             }
             .toast(isPresented: $showToast, message: "Заказ успешно отменён!")
         }
+        .navigationBarTitle("Укажите причину отмены", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: BackButton())
     }
 }
 

@@ -30,6 +30,7 @@
 		400F63DE2CD75EB60088425B /* Buy */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Buy; sourceTree = "<group>"; };
 		400F63DF2CD75ED80088425B /* Review */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Review; sourceTree = "<group>"; };
 		4011AF4D2D0833190000E947 /* CancelOrder */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CancelOrder; sourceTree = "<group>"; };
+		4059D2ED2D0B51C7006780A4 /* Promocode */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Promocode; sourceTree = "<group>"; };
 		40CEACE92CE3655A00A990FD /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
 		40F5536B2D0967D9009AB85D /* TotalScreen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TotalScreen; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -64,6 +65,7 @@
 		40A2229C2CC4D0DA0027EDEC /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				4059D2ED2D0B51C7006780A4 /* Promocode */,
 				40F5536B2D0967D9009AB85D /* TotalScreen */,
 				4011AF4B2D0830B70000E947 /* MainScreenView.swift */,
 				40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */,
@@ -99,6 +101,7 @@
 				400F63DE2CD75EB60088425B /* Buy */,
 				400F63DF2CD75ED80088425B /* Review */,
 				4011AF4D2D0833190000E947 /* CancelOrder */,
+				4059D2ED2D0B51C7006780A4 /* Promocode */,
 				40CEACE92CE3655A00A990FD /* Models */,
 				40F5536B2D0967D9009AB85D /* TotalScreen */,
 			);
