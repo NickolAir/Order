@@ -2,6 +2,8 @@ import UIKit
 
 class ProductCell: UITableViewCell {
     
+    private let imageLoader = ImageLoadingServiceUIkit()
+    
     var viewModel: TableViewModel.ViewModelType.ProductCell? {
         didSet {
             updateUI()
@@ -198,8 +200,12 @@ class ProductCell: UITableViewCell {
         
         title.text = viewModel.title
         subtitle.text = viewModel.subtitle
-        if let imageName = viewModel.imageName {
-            picture.image = UIImage(named: imageName)
+        if let imageUrlString = viewModel.imageURL, let url = URL(string: imageUrlString) {
+            imageLoader.loadImage(from: url) { [weak self] image in
+                self?.picture.image = image
+            }
+        } else {
+            picture.image = nil 
         }
         chevronImage.isHidden = viewModel.arrowHide
     }

@@ -12,7 +12,7 @@ class ReviewListViewModel {
             cellViewModels.append(.init(type: .productCell(TableViewModel.ViewModelType.ProductCell(
             title: product.title,
             subtitle: product.subtitle,
-            imageName: product.imageName,
+            imageURL: product.imageURL,
             arrowHide: product.arrowHide))))
         }
     }

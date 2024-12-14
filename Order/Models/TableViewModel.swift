@@ -66,7 +66,7 @@ struct TableViewModel {
         struct ProductCell {
             let title: String?
             let subtitle: String?
-            let imageName: String?
+            let imageURL: String?
             let arrowHide: Bool
         }
         

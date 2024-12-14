@@ -27,6 +27,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		400D8B472D0DEFFC006E93D5 /* ImageLoader */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageLoader; sourceTree = "<group>"; };
 		400F63DE2CD75EB60088425B /* Buy */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Buy; sourceTree = "<group>"; };
 		400F63DF2CD75ED80088425B /* Review */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Review; sourceTree = "<group>"; };
 		4011AF4D2D0833190000E947 /* CancelOrder */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CancelOrder; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 				4011AF4B2D0830B70000E947 /* MainScreenView.swift */,
 				40A2229D2CC4D0DA0027EDEC /* AppDelegate.swift */,
 				40A2229F2CC4D0DA0027EDEC /* SceneDelegate.swift */,
+				400D8B472D0DEFFC006E93D5 /* ImageLoader */,
 				4059D2ED2D0B51C7006780A4 /* Promocode */,
 				40F5536B2D0967D9009AB85D /* TotalScreen */,
 				40CEACE92CE3655A00A990FD /* Models */,
@@ -98,6 +100,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				400D8B472D0DEFFC006E93D5 /* ImageLoader */,
 				400F63DE2CD75EB60088425B /* Buy */,
 				400F63DF2CD75ED80088425B /* Review */,
 				4011AF4D2D0833190000E947 /* CancelOrder */,
