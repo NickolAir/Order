@@ -48,9 +48,20 @@ struct OrderView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     ForEach(viewModel.payments) { payment in
                         PaymentView(payment: payment)
-                            .padding(.horizontal)
+                            .padding(.horizontal, 12)
                     }
                 }
+            }
+            
+            VStack {
+                Rectangle()
+                    .fill(Color.gray.opacity(0.1))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 20)
+            }
+            
+            VStack {
+                PromoCodeListView()
             }
         }
     }
