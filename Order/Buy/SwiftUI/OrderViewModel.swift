@@ -35,13 +35,15 @@ class OrderViewModel: ObservableObject {
     ]
     
     @Published var promoCodes: [PromoCode] = [
-        PromoCode(code: "SECRETCODE", discount: 5, expirationDate: "31 марта", description: nil, isActive: true),
+        PromoCode(code: "SECRETCODE", discount: 5, expirationDate: "31 марта", description: nil, isActive: false),
         PromoCode(code: "HELLO", discount: 5, expirationDate: "31 марта", description: "Промокод действует на первый заказ в приложении", isActive: false),
         PromoCode(code: "VESNA23", discount: 5, expirationDate: "31 марта", description: "Промокод действует для заказов от 30 000 ₽", isActive: false),
         PromoCode(code: "4300162112534", discount: 5, expirationDate: "31 марта", description: nil, isActive: false),
         PromoCode(code: "4300162112534", discount: 5, expirationDate: "31 марта", description: nil, isActive: false),
         PromoCode(code: "4300162112534", discount: 5, expirationDate: "31 марта", description: nil, isActive: false)
     ]
+    
+    @Published var selectedScreen: OrderTotalView? = nil
     
     @Published var isPromoListVisible: Bool = true
     

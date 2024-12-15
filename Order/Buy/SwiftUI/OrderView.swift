@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct OrderView: View {
-    @StateObject private var viewModel = OrderViewModel() 
+    @StateObject private var viewModel = OrderViewModel()
 
     var body: some View {
         ScrollView {

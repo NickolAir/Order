@@ -2,6 +2,8 @@ import SwiftUI
 
 struct TotalSummaryView: View {
     var summary: Totals
+    @State private var isShowingTotalScreen = false
+    @StateObject private var viewModel = OrderViewModel()
 
     var body: some View {
         VStack(spacing: 16) {
@@ -61,7 +63,7 @@ struct TotalSummaryView: View {
             }
 
             Button(action: {
-                // Логика оплаты
+                isShowingTotalScreen = true
             }) {
                 Text("Оплатить")
                     .font(.headline)
@@ -79,6 +81,9 @@ struct TotalSummaryView: View {
         }
         .padding()
         .background(.gray.opacity(0.1))
+        .sheet(isPresented: $isShowingTotalScreen) {
+            viewModel.totalScreens.randomElement()
+        }
     }
 }
 
