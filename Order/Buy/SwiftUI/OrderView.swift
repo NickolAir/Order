@@ -46,11 +46,13 @@ struct OrderView: View {
                     .padding()
                 
                 VStack(alignment: .leading, spacing: 16) {
-                    ForEach(viewModel.payments) { payment in
-                        PaymentView(payment: payment)
-                            .padding(.horizontal, 12)
+                    ForEach($viewModel.payments) { $payment in
+                        PaymentView(payment: $payment) {
+                            viewModel.activatePaymentMethod(payment)
+                        }
                     }
                 }
+                .padding(.horizontal, 12)
             }
             
             VStack {
@@ -65,8 +67,11 @@ struct OrderView: View {
             }
             
             VStack {
-                TotalSummaryView(summary: viewModel.calculate())
+                TotalSummaryView(summary: viewModel.totals)
             }
+        }
+        .onAppear {
+            viewModel.calculate()
         }
     }
 }

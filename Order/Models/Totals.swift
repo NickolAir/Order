@@ -1,7 +1,7 @@
 struct Totals {
-    let itemsPrice: Int
-    let discount: Int
-    let promoCodeDiscount: Int
-    let paymentMethodDiscount: Int
-    let totalPrice: Int
+    var itemsPrice: Int
+    var discount: Int
+    var promoCodeDiscount: Int
+    var paymentMethodDiscount: Int
+    var totalPrice: Int
 }

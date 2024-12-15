@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct PaymentView: View {
-    let payment: PaymentModel
+    @Binding var payment: PaymentModel
+    let activateAction: () -> ()
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
@@ -43,34 +44,20 @@ struct PaymentView: View {
             }
             
             Spacer()
-            ToggleButton()
-                .padding(.top, 8)
-        }
-        .padding()
-    }
-    
-}
-
-struct ToggleButton: View {
-    @State private var isOn: Bool = false
-
-    var body: some View {
-        VStack(spacing: 40) {
-            Button(action: {
-                isOn.toggle()
-            }) {
+            
+            Button(action: activateAction) {
                 ZStack {
                     Circle()
-                        .stroke(isOn ? Color(r: 255, g: 70, b: 17) : Color.gray, lineWidth: 3)
+                        .stroke(payment.isActive ? Color(r: 255, g: 70, b: 17) : Color.gray, lineWidth: 3)
                         .frame(width: 20, height: 20)
-                    if isOn {
+                    if payment.isActive {
                         Circle()
                             .fill(Color(r: 255, g: 70, b: 17))
                             .frame(width: 10, height: 10)
                     }
                 }
             }
-            .buttonStyle(PlainButtonStyle())
         }
+        .padding()
     }
 }

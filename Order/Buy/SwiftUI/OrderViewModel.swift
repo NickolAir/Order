@@ -26,12 +26,12 @@ class OrderViewModel: ObservableObject {
     ]
     
     @Published var payments: [PaymentModel] = [
-        .init(title: "SberPay", subtitle: "Через приложение Сбербанк", imageName: "sber", discount: 5, cashback: 5),
-        .init(title: "Банковской картой", subtitle: "Visa, Master Card, МИР", imageName: "card", discount: 5),
-        .init(title: "Яндекс Пэй со Сплитом", subtitle: "Оплата частями", imageName: "yapay", discount: 5),
-        .init(title: "Рассрочка Тинькофф", subtitle: "На 3 месяца без переплат", imageName: "tinkoff", discount: 5),
-        .init(title: "Tinkoff Pay", subtitle: "Через приложение Тинькофф", imageName: "tinkoffpay", discount: 5),
-        .init(title: "Оплатить при получении", subtitle: "Наличными или картой", imageName: "wallet")
+        PaymentModel(title: "SberPay", subtitle: "Через приложение Сбербанк", imageName: "sber", discount: 5, cashback: 5),
+        PaymentModel(title: "Банковской картой", subtitle: "Visa, Master Card, МИР", imageName: "card", discount: 5),
+        PaymentModel(title: "Яндекс Пэй со Сплитом", subtitle: "Оплата частями", imageName: "yapay", discount: 5),
+        PaymentModel(title: "Рассрочка Тинькофф", subtitle: "На 3 месяца без переплат", imageName: "tinkoff", discount: 5),
+        PaymentModel(title: "Tinkoff Pay", subtitle: "Через приложение Тинькофф", imageName: "tinkoffpay", discount: 5),
+        PaymentModel(title: "Оплатить при получении", subtitle: "Наличными или картой", imageName: "wallet")
     ]
     
     @Published var promoCodes: [PromoCode] = [
@@ -45,7 +45,67 @@ class OrderViewModel: ObservableObject {
     
     @Published var isPromoListVisible: Bool = true
     
-    func calculate() -> Totals {
+    @Published var totals: Totals = Totals(itemsPrice: 0, discount: 0, promoCodeDiscount: 0, paymentMethodDiscount: 0, totalPrice: 0)
+    
+    @Published var totalScreens: [OrderTotalView] = [
+        OrderTotalView(
+            imageName: "Bag Success",
+            title: "Спасибо за заказ!",
+            description: "Ваш заказ успешно оформлен. Вы можете отслеживать его статус в личном кабинете.",
+            mainButtonTitle: "Продолжить покупки",
+            mainButtonAction: {
+                print("Главная кнопка нажата")
+            },
+            optionalButtonTitle: "Статус заказа",
+            optionalButtonAction: {
+                print("Опциональная кнопка нажата")
+            }
+        ),
+        
+        OrderTotalView(
+            imageName: "Bag Success",
+            title: "Спасибо за заказ!",
+            description: "Обратите внимание, что у неоплаченных заказов ограниченный срок хранения",
+            mainButtonTitle: "Продолжить покупки",
+            mainButtonAction: {
+                print("Главная кнопка нажата")
+            },
+            optionalButtonTitle: "Статус заказа",
+            optionalButtonAction: {
+                print("Опциональная кнопка нажата")
+            }
+        ),
+        
+        OrderTotalView(
+            imageName: "Bag Error",
+            title: "Что-то пошло не так...",
+            description: "К сожалению, ваш заказ не был создан",
+            mainButtonTitle: "На главную",
+            mainButtonAction: {
+                print("Главная кнопка нажата")
+            },
+            optionalButtonTitle: nil,
+            optionalButtonAction: {
+               
+            }
+        ),
+        
+        OrderTotalView(
+            imageName: "Payment Error",
+            title: "Оплата не прошла",
+            description: "Возможно, были введены неверные данные или произошла ошибка на стороне платежной системы",
+            mainButtonTitle: "Попробовать еще",
+            mainButtonAction: {
+                print("Главная кнопка нажата")
+            },
+            optionalButtonTitle: nil,
+            optionalButtonAction: {
+               
+            }
+        ),
+    ]
+    
+    func calculate() {
         var itemsPrice: Double = 0
         var discount: Double = 0
         var promoCodeDiscount: Double = 0
@@ -53,35 +113,38 @@ class OrderViewModel: ObservableObject {
         var totalPrice: Double = 0
         
         for item in products {
-            itemsPrice += item.price!
+            itemsPrice += item.price ?? 0
         }
         for item in promoCodes {
-            if item.isActive == true {
+            if item.isActive {
                 promoCodeDiscount = itemsPrice * Double(item.discount) / 100
             }
         }
         for item in payments {
-            if item.isActive == true {
+            if item.isActive {
                 if let discountValue = item.discount {
                     paymentMethodDiscount = itemsPrice * Double(discountValue) / 100
-                } else {
-                    paymentMethodDiscount = 0
                 }
             }
         }
         discount = paymentMethodDiscount + promoCodeDiscount
         totalPrice = itemsPrice - discount
-        return Totals(itemsPrice: Int(itemsPrice), discount: Int(discount), promoCodeDiscount: Int(promoCodeDiscount), paymentMethodDiscount: Int(paymentMethodDiscount), totalPrice: Int(totalPrice))
+        
+        totals = Totals(
+            itemsPrice: Int(itemsPrice),
+            discount: Int(discount),
+            promoCodeDiscount: Int(promoCodeDiscount),
+            paymentMethodDiscount: Int(paymentMethodDiscount),
+            totalPrice: Int(totalPrice)
+        )
     }
     
     func activatePaymentMethod(_ paymentMethod: PaymentModel) {
         for index in payments.indices {
-            payments[index].isActive = false
+            payments[index].isActive = (payments[index].id == paymentMethod.id)
         }
         
-        if let index = payments.firstIndex(where: { $0.id == paymentMethod.id }) {
-            payments[index].isActive = true
-        }
+        calculate()
     }
 
     func activatePromoCode(_ promoCode: PromoCode) {
@@ -92,6 +155,8 @@ class OrderViewModel: ObservableObject {
         if let index = promoCodes.firstIndex(where: { $0.id == promoCode.id }) {
             promoCodes[index].isActive = true
         }
+        
+        calculate()
     }
 
     func togglePromoListVisibility() {
