@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PromoCodeListView: View {
-    @StateObject private var viewModel = PromoCodeViewModel()
+    @StateObject private var viewModel = OrderViewModel()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {

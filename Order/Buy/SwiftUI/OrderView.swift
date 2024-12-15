@@ -64,6 +64,9 @@ struct OrderView: View {
                 PromoCodeListView()
             }
             
+            VStack {
+                TotalSummaryView(summary: viewModel.calculate())
+            }
         }
     }
 }

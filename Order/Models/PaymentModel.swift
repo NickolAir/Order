@@ -6,6 +6,7 @@ struct PaymentModel: Identifiable{
     let imageName: String
     let discount: Int?
     let cashback: Int?
+    var isActive: Bool = false
     
     init(id: UUID = UUID(), title: String, subtitle: String, imageName: String, discount: Int, cashback: Int) {
         self.id = id
