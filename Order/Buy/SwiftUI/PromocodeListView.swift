@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PromoCodeListView: View {
-    @StateObject private var viewModel = OrderViewModel()
+    @EnvironmentObject var viewModel: OrderViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -35,6 +35,7 @@ struct PromoCodeListView: View {
                         PromoCodeView(promoCode: $promoCode) {
                             viewModel.activatePromoCode(promoCode)
                         }
+                        .environmentObject(viewModel)
                     }
                 }
                 .transition(.slide)

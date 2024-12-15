@@ -2,13 +2,28 @@ import SwiftUI
 struct PromoCodeView: View {
     @Binding var promoCode: PromoCode
     let activateAction: () -> ()
+    @EnvironmentObject var viewModel: OrderViewModel
     
     var body: some View {
         ZStack {
             Rectangle()
                 .fill(Color(r: 246, g: 246, b: 246))
                 .cornerRadius(12)
-                .frame(width: .infinity, height: .infinity)
+            
+            HStack {
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: 16, height: 16)
+                    .offset(x: -8)
+                
+                Spacer()
+                
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: 16, height: 16)
+                    .offset(x: 8)
+            }
+            
             HStack {
                 VStack(alignment: .leading) {
                     HStack {
@@ -50,6 +65,7 @@ struct PromoCodeView: View {
                         if newValue {
                             activateAction()
                         }
+                        viewModel.calculate()
                     }
                     .padding(.horizontal, 12)
             }

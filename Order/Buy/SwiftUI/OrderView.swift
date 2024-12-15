@@ -64,6 +64,7 @@ struct OrderView: View {
             
             VStack {
                 PromoCodeListView()
+                    .environmentObject(viewModel)
             }
             
             VStack {
