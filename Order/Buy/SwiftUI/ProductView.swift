@@ -13,7 +13,7 @@ struct ProductView: View {
                     .lineLimit(2)
 
                 HStack {
-                    Text("\(product.quantity ?? 1) шт.")
+                    Text("\(product.quantity!) шт.")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                     if let size = product.size {

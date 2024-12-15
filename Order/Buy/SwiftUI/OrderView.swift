@@ -25,13 +25,37 @@ struct OrderView: View {
                             .padding(.horizontal)
                     }
                 }
-                Spacer()
             }
             .padding()
             .navigationTitle("Оформление заказа")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: BackButton())
+            
+            VStack {
+                Rectangle()
+                    .fill(Color.gray.opacity(0.1))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 20)
+            }
+            
+            VStack(alignment: .leading) {
+                Text("Способ оплаты")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding()
+                
+                VStack(alignment: .leading, spacing: 16) {
+                    ForEach(viewModel.payments) { payment in
+                        PaymentView(payment: payment)
+                            .padding(.horizontal)
+                    }
+                }
+            }
         }
     }
+}
+
+#Preview {
+    OrderView()
 }

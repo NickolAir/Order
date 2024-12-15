@@ -24,4 +24,13 @@ class OrderViewModel: ObservableObject {
             originalPrice: 32217.00,
             discount: 40),
     ]
+    
+    @Published var payments: [PaymentModel] = [
+        .init(title: "SberPay", subtitle: "Через приложение Сбербанк", imageName: "sber", discount: 5, cashback: 5),
+        .init(title: "Банковской картой", subtitle: "Visa, Master Card, МИР", imageName: "card", discount: 5),
+        .init(title: "Яндекс Пэй со Сплитом", subtitle: "Оплата частями", imageName: "yapay", discount: 5),
+        .init(title: "Рассрочка Тинькофф", subtitle: "На 3 месяца без переплат", imageName: "tinkoff", discount: 5),
+        .init(title: "Tinkoff Pay", subtitle: "Через приложение Тинькофф", imageName: "tinkoffpay", discount: 5),
+        .init(title: "Оплатить при получении", subtitle: "Наличными или картой", imageName: "wallet")
+    ]
 }
