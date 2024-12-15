@@ -14,7 +14,7 @@ struct PromoCodeListView: View {
                 .foregroundColor(.gray)
 
             Button(action: {
-    
+                
             }) {
                 HStack {
                     Image("Shape")
@@ -29,18 +29,23 @@ struct PromoCodeListView: View {
                 .cornerRadius(12)
             }
 
-            VStack(spacing: 8) {
-                ForEach($viewModel.promoCodes) { $promoCode in
-                    PromoCodeView(promoCode: $promoCode) {
-                        viewModel.activatePromoCode(promoCode)
+            if viewModel.isPromoListVisible {
+                VStack(spacing: 8) {
+                    ForEach($viewModel.promoCodes) { $promoCode in
+                        PromoCodeView(promoCode: $promoCode) {
+                            viewModel.activatePromoCode(promoCode)
+                        }
                     }
                 }
+                .transition(.slide)
             }
-            
+
             Button(action: {
-                
+                withAnimation {
+                    viewModel.togglePromoListVisibility() 
+                }
             }) {
-                Text("Скрыть промокоды")
+                Text(viewModel.isPromoListVisible ? "Скрыть промокоды" : "Показать промокоды")
                     .font(.callout)
                     .foregroundColor(Color(r: 255, g: 70, b: 17))
                     .bold()

@@ -17,8 +17,8 @@ struct PaymentView: View {
                         .font(.headline)
                         .fontWeight(.medium)
                 
-                    if payment.discount != nil {
-                        Text("-\(payment.discount!)%")
+                    if let discountValue = payment.discount {
+                        Text("-\(discountValue)%")
                             .font(.caption)
                             .foregroundColor(.white)
                             .padding(.horizontal, 4)
@@ -26,12 +26,12 @@ struct PaymentView: View {
                             .cornerRadius(8)
                     }
                     
-                    if payment.cashback != nil {
-                        Text("+\(payment.discount!)%")
+                    if let cashbackValue = payment.cashback {
+                        Text("+\(cashbackValue)%")
                             .font(.caption)
                             .foregroundColor(.white)
                             .padding(.horizontal, 4)
-                            .background(.green)
+                            .background(Color(r: 0, g: 183, b: 117))
                             .cornerRadius(8)
                     }
                 }

@@ -1,51 +1,60 @@
 import SwiftUI
-
 struct PromoCodeView: View {
     @Binding var promoCode: PromoCode
-    let activateAction: () -> Void
-
+    let activateAction: () -> ()
+    
     var body: some View {
-        HStack(spacing: 16) {
-            VStack(alignment: .leading, spacing: 5) {
-                HStack {
-                    Text(promoCode.code)
-                        .font(.headline)
-                        .fontWeight(.medium)
-
-                    Text("-\(promoCode.discount)%")
+        ZStack {
+            Rectangle()
+                .fill(Color(r: 246, g: 246, b: 246))
+                .cornerRadius(12)
+                .frame(width: .infinity, height: .infinity)
+            HStack {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(promoCode.code)
+                            .font(.system(size: 16))
+                        
+                        Text("-\(promoCode.discount)%")
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color(r: 0, g: 183, b: 117))
+                            .foregroundStyle(.white)
+                            .cornerRadius(32)
+                            .font(.system(size: 12))
+                        
+                        Button(action: {
+                            
+                        }) {
+                            Image("infoButton")
+                        }
+                    }
+                    
+                    Text("По \(promoCode.expirationDate)")
                         .font(.caption)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 4)
-                        .background(Color.green)
-                        .cornerRadius(8)
-
-                    Image(systemName: "info.circle")
                         .foregroundColor(.gray)
-                }
-
-                Text("По \(promoCode.expirationDate)")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-
-                if let description = promoCode.description {
-                    Text(description)
-                        .font(.caption2)
-                        .foregroundColor(.gray)
-                }
-            }
-
-            Spacer()
-
-            Toggle("", isOn: $promoCode.isActive)
-                .toggleStyle(SwitchToggleStyle(tint: Color(r: 255, g: 70, b: 17)))
-                .onChange(of: promoCode.isActive) { newValue in
-                    if newValue {
-                        activateAction()
+                    
+                    if let description = promoCode.description {
+                        Text(description)
+                            .font(.caption2)
+                            .foregroundColor(.gray)
+                            .padding(.top, 1)
                     }
                 }
+                
+                Spacer()
+                
+                Toggle("", isOn: $promoCode.isActive)
+                    .toggleStyle(SwitchToggleStyle(tint: Color(r: 255, g: 70, b: 17)))
+                    .onChange(of: promoCode.isActive) { newValue in
+                        if newValue {
+                            activateAction()
+                        }
+                    }
+                    .padding(.horizontal, 12)
+            }
+            .padding(.vertical, 12)
+            .padding(.leading, 12)
         }
-        .padding()
-        .background(Color.gray.opacity(0.1))
-        .cornerRadius(12)
     }
 }

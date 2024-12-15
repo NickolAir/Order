@@ -10,6 +10,8 @@ class PromoCodeViewModel: ObservableObject {
         PromoCode(code: "4300162112534", discount: 5, expirationDate: "31 марта", description: nil, isActive: false)
     ]
     
+    @Published var isPromoListVisible: Bool = true // Управление видимостью списка
+
     func activatePromoCode(_ promoCode: PromoCode) {
         for index in promoCodes.indices {
             promoCodes[index].isActive = false
@@ -18,5 +20,9 @@ class PromoCodeViewModel: ObservableObject {
         if let index = promoCodes.firstIndex(where: { $0.id == promoCode.id }) {
             promoCodes[index].isActive = true
         }
+    }
+
+    func togglePromoListVisibility() {
+        isPromoListVisible.toggle()
     }
 }
