@@ -34,11 +34,19 @@ struct CustomButton: View {
 }
 
 struct CancelOrderView: View {
+    @Environment(\.presentationMode) var presentationMode
+
     @State private var selectedOption: Int? = nil
     @State private var text: String = ""
     @State private var isCancelButtonPressed: Bool = false
     @State private var isLoading: Bool = false
     @State private var showToast: Bool = false
+    
+    @ObservedObject var viewModel = CancelOrderViewModel(isMoneyNotification: true)
+    
+    func returnOnPrevView() {
+        
+    }
     
     var body: some View {
         NavigationView {
@@ -51,7 +59,7 @@ struct CancelOrderView: View {
                                 .frame(maxWidth: .infinity)
                                 .foregroundColor(Color(r: 244, g: 45, b: 45))
                             
-                            Image("redCircle")
+                            Image("redCircleWarning")
                                 .padding(.trailing, 14)
                         }
                         .background(Color(r: 255, g: 236, b: 236))
@@ -59,18 +67,24 @@ struct CancelOrderView: View {
                         .padding(.top, 15)
                         .transition(.opacity)
                     }
+                    else {
+                        EmptyView()
+                    }
                     
                     VStack(alignment: .leading, spacing: 16) {
-                        OptionToggle(isSelected: $selectedOption, optionIndex: 0, label: "Не подходит дата получения")
-                        OptionToggle(isSelected: $selectedOption, optionIndex: 1, label: "Часть товаров из заказа была отменена")
-                        OptionToggle(isSelected: $selectedOption, optionIndex: 2, label: "Не получилось применить скидку или промокод")
-                        OptionToggle(isSelected: $selectedOption, optionIndex: 3, label: "Хочу изменить заказ и оформить заново")
-                        OptionToggle(isSelected: $selectedOption, optionIndex: 4, label: "Нашелся товар дешевле")
-                        OptionToggle(isSelected: $selectedOption, optionIndex: 5, label: "Другое")
+                        if (viewModel.cancelOptions.count > 0) {
+                            ForEach(0...viewModel.cancelOptions.count - 1, id: \.self) { index in
+                                let optionLabel = viewModel.cancelOptions[index]
+                                OptionToggle(isSelected: $selectedOption, optionIndex: index, label: optionLabel)
+                            }
+                            
+                        }
+                        
+                        OptionToggle(isSelected: $selectedOption, optionIndex: viewModel.cancelOptions.count, label: "Другое")
                     }
-                    .padding(.init(top: 15, leading: 15, bottom: 0, trailing: 15))
+                    .padding(.init(top: 16, leading: 16, bottom: 0, trailing: 16))
                     
-                    if selectedOption == 5 {
+                    if selectedOption == viewModel.cancelOptions.count {
                         TextField("Опишите проблему", text: $text)
                             .multilineTextAlignment(.leading)
                             .padding()
@@ -81,19 +95,21 @@ struct CancelOrderView: View {
                             .padding(.top, 15)
                     }
 
-                    HStack {
-                        Text("Обычно деньги сразу возвращаются на карту. В некоторых случаях это может занять до 3 рабочих дней.")
-                            .padding(.all, 15)
-                        
-                        Image("yellowCircle")
-                            .padding(.trailing, 14)
-                            .offset(x: 0, y: -20)
+                    if (viewModel.isMoneyNotification) {
+                        HStack {
+                            Text("Обычно деньги сразу возвращаются на карту. В некоторых случаях это может занять до 3 рабочих дней.")
+                                .padding(.all, 15)
+                            
+                            Image("yellowCircleWarning")
+                                .padding(.trailing, 14)
+                                .offset(x: 0, y: -20)
+                        }
+                        .background(Color(r: 254, g: 247, b: 222))
+                        .cornerRadius(12)
+                        .padding(.top, 15)
                     }
-                    .background(Color(r: 254, g: 247, b: 222))
-                    .cornerRadius(12)
-                    .padding(.top, 15)
                     
-                    CustomButton(title: "Отменить заказ", backgroundColor: Color(r: 255, g: 70, b: 17), textColor: Color(r: 255, g: 255, b: 255)) {
+                    CustomButton(title: "Отменить заказ", backgroundColor: Color(r: 255, g: 70, b: 17), textColor: .white) {
                         if let _ = selectedOption {
                             isLoading = true
                             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -106,9 +122,10 @@ struct CancelOrderView: View {
                         }
                     }
                     .padding(.top, 15)
+                    Spacer()
                 }
                 .padding()
-                .offset(x: 0, y: -90)
+                
                 
                 if isLoading {
                     Color.black.opacity(0.4)
@@ -119,12 +136,22 @@ struct CancelOrderView: View {
                         .cornerRadius(12)
                         .shadow(radius: 5)
                 }
+            
             }
+            
             .toast(isPresented: $showToast, message: "Заказ успешно отменён!")
         }
-        .navigationBarTitle("Укажите причину отмены", displayMode: .inline)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Оформление заказа")
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: BackButton())
+        .toolbar {
+            ToolbarItem (placement: .navigation) {
+                Button("BackButton", systemImage: "chevron.left", action: {
+                    presentationMode.wrappedValue.dismiss()
+                })
+                    .tint(Color(r: 255, g: 70, b: 17))
+            }
+        }
     }
 }
 
@@ -134,26 +161,30 @@ struct OptionToggle: View {
     var label: String
     
     var body: some View {
-        Toggle(isOn: Binding(
-            get: { isSelected == optionIndex },
-            set: { newValue in
-                if newValue {
-                    isSelected = optionIndex
-                } else {
-                    isSelected = nil
+        HStack {
+            Toggle(isOn: Binding(
+                get: { isSelected == optionIndex },
+                set: { newValue in
+                    if newValue {
+                        isSelected = optionIndex
+                    } else {
+                        isSelected = nil
+                    }
                 }
+            )) {
+                Text(label)
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.leading)
             }
-        )) {
-            Text(label)
-                
+            .toggleStyle(CheckboxToggleStyle())
         }
-        .toggleStyle(CheckboxToggleStyle())
+        
     }
 }
 
 struct CheckboxToggleStyle: ToggleStyle {
     func makeBody(configuration: Configuration) -> some View {
-        HStack {
+        HStack(alignment: .top) {
             Image(systemName: configuration.isOn ? "checkmark.square.fill" : "square")
                 .resizable()
                 .frame(width: 25, height: 25)
@@ -164,6 +195,7 @@ struct CheckboxToggleStyle: ToggleStyle {
                     configuration.isOn.toggle()
                 }
             configuration.label
+            
         }
     }
 }
